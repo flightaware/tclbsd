@@ -4,3 +4,5 @@
     * Put all commands in a "bsd" namespace
     * Export commands from "bsd" namespace
     * Add interface to setproctitle
+    * Use the proper secure idiom, setproctitle("%s", string), to prevent
+      stack mangling, etc.
