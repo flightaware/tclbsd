@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.1.1.1 2005-08-07 06:30:02 karl Exp $
+ * $Id: bsd.c,v 1.2 2005-08-07 06:39:44 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -638,3 +638,40 @@ BSD_GetLoadAvgObjCmd (clientData, interp, objc, objv)
 }
 
 
+/*-----------------------------------------------------------------------------
+ * BSD_SetProcTitleObjCmd --
+ *  
+ * Implements the `setproctitle' command:
+ *    setproctitle
+ *  
+ * Results:
+ *      A standard Tcl result.
+ *      
+ * Side effects:
+ *      See the user documentation.
+ *-----------------------------------------------------------------------------
+ */     
+int
+BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
+    ClientData    clientData;
+    Tcl_Interp   *interp;
+    int           objc;
+    Tcl_Obj      *CONST objv[];
+{
+    char *titleString;
+
+    if (objc > 2) {
+	Tcl_WrongNumArgs (interp, 1, objv, "[string]");
+	return TCL_ERROR;
+    }
+
+    if (objc == 1) {
+	titleString = NULL;
+    } else {
+	titleString = Tcl_GetString (objv[1]);
+    }
+
+    setproctitle (titleString);
+
+    return TCL_OK;
+}
