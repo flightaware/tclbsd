@@ -6,3 +6,4 @@
     * Add interface to setproctitle
     * Use the proper secure idiom, setproctitle("%s", string), to prevent
       stack mangling, etc.
+    * Rudimentary manpage bsd.n.

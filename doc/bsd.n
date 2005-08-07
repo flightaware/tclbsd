@@ -1,0 +1,66 @@
+.TH BSD n 0.0 "Tcl-Extensions"
+.HS BSD tcl
+.BS
+.SH NAME
+BSD \- Tcl interface to various BSD UNIX functions
+.SH SYNOPSIS
+\fB::bsd::getloadavg\fR 
+.br
+\fB::bsd::rlimit \fIget|set soft|hard limitName ?val?\fR
+.br
+\fB::bsd::rusage\fR
+.br
+\fB::bsd::setproctitle \fIstring\fR
+.br
+\fB::bsd::statfs \fI path\fR
+.br
+.SH DESCRIPTION
+The BSD extension provides Tcl programs with new Tcl commands to interface
+to various system calls and library routines present in BSD UNIX.
+.PP
+\fB::bsd::getloadavg\fR returns the number of processes in the system
+run queue as a list, representing averages over the last 1, 5, and 15
+minutes.
+.PP
+\fB::bsd::rlimit\fR lets you get and set the current soft and hard settings 
+for resource limits.  See the Berkeley manpage for \fIgetrlimit\fR and 
+\fIsetrlimit\fR
+for details.
+.PP
+\fB::bsd::rusage\fR returns the cumulative resource usage for the current
+process, as a list of key-value pairs, suitable for loading into an array
+using \fIarray set\fR.  Resources listed include user CPU, system CPU,
+max resident set size, shared text Kbyte seconds, unshared data Kbyte
+seconds, statck Kbyte seconds, page reclaims, page faults, number of times
+swapped, number of file system inputs and outputs, number of interprocess
+communications (IPC) messages sent and received, number of signals
+delivered, number of voluntary context switches, and number of involuntary
+context switches.  For more information see the BSD \fIgetursage\fR manpage.
+.PP
+\fB::bsd::setproctitle\fR sets the process title that appears on the \fIps\fR
+command.  The title is set from the executable's name, followed by the
+specified string.  If the string argument begins with a dash characters,
+the executable's name is skipped.  If no string is specified, the process
+title is restored.  For more information see the BSD \fIsetproctitle\fR
+manpage.
+.PP
+\fB::bsd::statfs\fR returns information about a mounted filesystem.
+The \fIpath\fR argument is the path name of any file within the mounted
+filesystem.  Results are returned as a list of key-value pairs suitable
+for loading into an array using \fIarray set\fR.  Values returned include
+the fundamental filesystem block size (\fIfundamentalFileSystemBlockSize\fR), 
+the optimal transfer block size (\fIoptimalTransferBlockSize\fR),
+the total number of data blocks (\fItotalDataBlocks\fR), the total number of 
+free blocks (\fIfreeBlocks\fR), and
+the total number of available free blocks (\fIavailableFreeBlocks\fR). 
+Also included are the total number of filesystem nodes (\fItotalFileNodes\fR)
+and the free file nodes (\fIfreeFileNodes\fR), the file system 
+type (\fIfileSystemType\fR), mount point (\fImountPoint), and mounted 
+filesystem name (\fImountedFileSystem\fR).  Finally a list of flags is 
+provided, which can include \fBreadOnly\fR, \fBsynchronous\fR,
+\fBnoExec\fR, \fBnoSUID\fR, \fBnoDev\fR, \fBunion\fR, \fBasynchronous\fR,
+\fBSUIDdir\fR, \fBsoftUpdates\fR, \fBnoFollowSymlinks\fR, \fBnoAtime\fR,
+\fBnoClusterRead\fR, \fBnoClusterWrite\fR, \fBexportReadOnly\fR,
+\fBexported\fR, \fBworldExported\fR, \fBanonUidMapping\fR,
+\fBkerberosUidMapping\fR, \fBwebNFS\fR, \fBfilesystemStoredLocally\fR,
+\fBquotasEnabled\fR, \fBrootFilesystem\fR, and \fBuserMounted\fR.
