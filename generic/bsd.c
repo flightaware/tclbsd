@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.3 2005-08-07 06:58:27 karl Exp $
+ * $Id: bsd.c,v 1.4 2005-08-07 07:25:36 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -588,6 +588,14 @@ BSD_StatfsObjCmd (clientData, interp, objc, objv)
 
 #ifdef MNT_USER
     FLAGCHECK (MNT_USER, "userMounted")
+#endif
+
+#ifdef MNT_MULTILABEL
+    FLAGCHECK (MNT_MULTILABEL, "multiLabel")
+#endif
+
+#ifdef MNT_ACLS
+    FLAGCHECK (MNT_ACLS, "aclsEnabled")
 #endif
 
     if (AppendNameObj (interp, resultObj, "flags", flagListObj) == TCL_ERROR) return TCL_ERROR;

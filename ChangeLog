@@ -7,3 +7,5 @@
     * Use the proper secure idiom, setproctitle("%s", string), to prevent
       stack mangling, etc.
     * Rudimentary manpage bsd.n.
+    * Add support for getfsstat flags MNT_MULTILABEL (multiLabel) and
+      MNT_ACLS (aclsEnabled).
