@@ -1,7 +1,7 @@
 /*
  * tclbsd.c --
  *
- * $Id: tclbsd.c,v 1.2 2005-08-07 06:39:44 karl Exp $
+ * $Id: tclbsd.c,v 1.3 2005-08-07 06:42:53 karl Exp $
  *
  *
  */
@@ -93,6 +93,10 @@ Bsd_Init(Tcl_Interp *interp)
     /* if (Tcl_Export (interp, namespace, "*", 0) == TCL_ERROR) {
 	return TCL_ERROR;
     } */
+    if (Tcl_Eval (interp, "namespace eval bsd {namespace export *}") == TCL_ERROR) {
+	return TCL_ERROR;
+    }
+
 
     return TCL_OK;
 }

@@ -1,4 +1,6 @@
 
 2005-08-07 Karl Lehenbauer <karl-bsd@sc.com>
 
-    * Begin
+    * Put all commands in a "bsd" namespace
+    * Export commands from "bsd" namespace
+    * Add interface to setproctitle
