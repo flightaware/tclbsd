@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.4 2005-08-07 07:25:36 karl Exp $
+ * $Id: bsd.c,v 1.5 2005-11-24 04:37:38 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -596,6 +596,14 @@ BSD_StatfsObjCmd (clientData, interp, objc, objv)
 
 #ifdef MNT_ACLS
     FLAGCHECK (MNT_ACLS, "aclsEnabled")
+#endif
+
+#ifdef MNT_JAILDEVFS
+    FLAGCHECK (MNT_JAILDEVFS, "jailFriendlyDevfsBehavior")
+#endif
+
+#ifdef MNT_IGNORE
+    FLAGCHECK (MNT_IGNORE, "doNotShowInDF")
 #endif
 
     if (AppendNameObj (interp, resultObj, "flags", flagListObj) == TCL_ERROR) return TCL_ERROR;
