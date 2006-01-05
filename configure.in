@@ -3,7 +3,7 @@ dnl	This file is an input file used by the GNU "autoconf" program to
 dnl	generate the file "configure", which is run during Tcl installation
 dnl	to configure the system for the local environment.
 #
-# RCS: @(#) $Id: configure.in,v 1.3 2006-01-05 03:23:55 karl Exp $
+# RCS: @(#) $Id: configure.in,v 1.4 2006-01-05 23:26:42 karl Exp $
 
 #-----------------------------------------------------------------------
 # configure.in for Karl's BSD interface.  
@@ -19,6 +19,11 @@ dnl	to configure the system for the local environment.
 #-----------------------------------------------------------------------
 
 AC_INIT([BSD], [0.0])
+
+#-----------
+# Check to see if we have setproctitle
+#-----------
+AC_CHECK_FUNCS(setproctitle)
 
 #--------------------------------------------------------------------
 # Call TEA_INIT as the first TEA_ macro to set up initial vars.
@@ -179,11 +184,6 @@ TEA_MAKE_LIB
 
 TEA_PROG_TCLSH
 #TEA_PROG_WISH
-
-#-----------
-# Check to see if we have setproctitle
-#-----------
-AC_CHECK_FUNCS(setproctitle)
 
 #--------------------------------------------------------------------
 # Finally, substitute all of the various values into the Makefile.
