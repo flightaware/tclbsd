@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.5 2005-11-24 04:37:38 karl Exp $
+ * $Id: bsd.c,v 1.6 2006-01-05 03:23:55 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -687,7 +687,11 @@ BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
 	titleString = Tcl_GetString (objv[1]);
     }
 
+#ifdef HAVE_SETPROCTITLE
     setproctitle ("%s", titleString);
-
     return TCL_OK;
+#else
+    Tcl_SetObjResult (interp, Tcl_NewStringObj ("setproctitle undefined on this architecture", -1));
+    return TCL_ERROR;
+#endif
 }

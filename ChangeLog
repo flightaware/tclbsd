@@ -1,4 +1,12 @@
-$Id: ChangeLog,v 1.7 2006-01-05 02:07:50 karl Exp $
+$Id: ChangeLog,v 1.8 2006-01-05 03:23:55 karl Exp $
+
+2006-01-04 Karl Lehenbauer <karl-bsd@sc.com>
+    * Add support for syslog -- yes there are other Tcl syslog interfaces,
+      at least Scotty/Tnm, but we don't want to pull all that stuff in,
+      and this interface is, we believe, BSD-complete.
+
+    * configure.in, generic/bsd.c: Detect whether the setproctitle call
+      is available so we can build on the BSD variant Mac OS X/Darwin.
 
 2005-11-28 Karl Lehenbauer <karl-bsd@sc.com>
     * Add support for ::bsd::getkey to read a single key from the keybaord
