@@ -1,7 +1,7 @@
 /*
  * tclbsd.c --
  *
- * $Id: tclbsd.c,v 1.3 2005-08-07 06:42:53 karl Exp $
+ * $Id: tclbsd.c,v 1.4 2006-01-05 02:07:50 karl Exp $
  *
  *
  */
@@ -85,6 +85,12 @@ Bsd_Init(Tcl_Interp *interp)
     Tcl_CreateObjCommand (interp,
 			  "bsd::setproctitle",
                           BSD_SetProcTitleObjCmd,
+                          (ClientData) NULL,
+                          (Tcl_CmdDeleteProc*) NULL);
+
+    Tcl_CreateObjCommand (interp,
+			  "bsd::getkey",
+                          BSD_GetKeyObjCmd,
                           (ClientData) NULL,
                           (Tcl_CmdDeleteProc*) NULL);
 

@@ -1,3 +1,11 @@
+$Id: ChangeLog,v 1.7 2006-01-05 02:07:50 karl Exp $
+
+2005-11-28 Karl Lehenbauer <karl-bsd@sc.com>
+    * Add support for ::bsd::getkey to read a single key from the keybaord
+      in raw mode and return the character value as an integer
+
+2005-11-23 Karl Lehenbauer <karl-bsd@sc.com>
+    * Add support for MNT_JAILDEVFS and MNT_IGNORE flags when present.
 
 2005-08-07 Karl Lehenbauer <karl-bsd@sc.com>
 
@@ -10,5 +18,3 @@
     * Add support for getfsstat flags MNT_MULTILABEL (multiLabel) and
       MNT_ACLS (aclsEnabled).
 
-2005-11-23 Karl Lehenbauer <karl-bsd@sc.com>
-    * Add support for MNT_JAILDEVFS and MNT_IGNORE flags when present.
