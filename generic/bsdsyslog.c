@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsdsyslog.c,v 1.1 2006-01-05 03:23:55 karl Exp $
+ * $Id: bsdsyslog.c,v 1.2 2006-01-05 04:38:02 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -106,6 +106,11 @@ BSD_SyslogObjCmd (clientData, interp, objc, objv)
     enum options {
             OPT_LOG, OPT_OPEN, OPT_CLOSE, OPT_LOGMASK
     };
+
+    if (objc < 2) {
+	Tcl_WrongNumArgs (interp, 1, objv, "option");
+	return TCL_ERROR;
+    }
 
     if (Tcl_GetIndexFromObj(interp, objv[1], options, "option", TCL_EXACT,
         &optIndex) != TCL_OK) {

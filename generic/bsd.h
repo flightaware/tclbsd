@@ -16,7 +16,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.h,v 1.3 2006-01-05 02:07:50 karl Exp $
+ * $Id: bsd.h,v 1.4 2006-01-05 04:38:02 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -37,4 +37,7 @@ BSD_SetProcTitleObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl
 
 extern int
 BSD_GetKeyObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+
+extern int
+BSD_SyslogObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
 
