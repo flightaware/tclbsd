@@ -3,7 +3,7 @@ dnl	This file is an input file used by the GNU "autoconf" program to
 dnl	generate the file "configure", which is run during Tcl installation
 dnl	to configure the system for the local environment.
 #
-# RCS: @(#) $Id: configure.in,v 1.4 2006-01-05 23:26:42 karl Exp $
+# RCS: @(#) $Id: configure.in,v 1.5 2006-03-01 20:58:59 karl Exp $
 
 #-----------------------------------------------------------------------
 # configure.in for Karl's BSD interface.  
@@ -31,7 +31,7 @@ AC_CHECK_FUNCS(setproctitle)
 # as well as PKG_LIB_FILE and PKG_STUB_LIB_FILE.
 #--------------------------------------------------------------------
 
-TEA_INIT([3.1])
+TEA_INIT([3.4])
 
 AC_CONFIG_AUX_DIR(tclconfig)
 
@@ -81,7 +81,7 @@ TEA_ADD_INCLUDES([])
 TEA_ADD_LIBS([])
 TEA_ADD_CFLAGS([])
 TEA_ADD_STUB_SOURCES([])
-TEA_ADD_TCL_SOURCES([])
+TEA_ADD_TCL_SOURCES([bsd_procs.tcl])
 
 TEA_SERIAL_PORT
 
@@ -100,12 +100,12 @@ TEA_SERIAL_PORT
 #--------------------------------------------------------------------
 
 if test "${TEA_PLATFORM}" = "windows" ; then
-    AC_DEFINE(BUILD_sample)
+    AC_DEFINE(BUILD_sample, 1, [Build windows export dll])
     CLEANFILES="pkgIndex.tcl *.lib *.dll *.exp *.ilk *.pdb vc*.pch"
     #TEA_ADD_SOURCES([win/winFile.c])
     #TEA_ADD_INCLUDES([-I\"$(${CYGPATH} ${srcdir}/win)\"])
 else
-    CLEANFILES="pkgIndex.tcl"
+    CLEANFILES=""
     #TEA_ADD_SOURCES([unix/unixFile.c])
     #TEA_ADD_LIBS([-lsuperfly])
 fi
@@ -191,4 +191,4 @@ TEA_PROG_TCLSH
 # which require substituting th AC variables in.  Include these here.
 #--------------------------------------------------------------------
 
-AC_OUTPUT([Makefile])
+AC_OUTPUT([Makefile pkgIndex.tcl])

@@ -13,7 +13,7 @@
 # See the file "license.terms" for information on usage and redistribution
 # of this file, and for a DISCLAIMER OF ALL WARRANTIES.
 #
-# RCS: @(#) $Id: Makefile.in,v 1.1.1.1 2005-08-07 06:30:02 karl Exp $
+# RCS: @(#) $Id: Makefile.in,v 1.2 2006-03-01 20:58:59 karl Exp $
 
 #========================================================================
 # Add additional lines to handle any additional AC_SUBST cases that
@@ -148,7 +148,7 @@ PKG_CFLAGS	= @PKG_CFLAGS@
 #DEFS		= $(TCL_DEFS) @DEFS@ $(PKG_CFLAGS)
 DEFS		= @DEFS@ $(PKG_CFLAGS)
 
-CONFIG_CLEAN_FILES = Makefile
+CONFIG_CLEAN_FILES = Makefile pkgIndex.tcl
 
 CPPFLAGS	= @CPPFLAGS@
 LIBS		= @PKG_LIBS@ @LIBS@
