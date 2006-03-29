@@ -1,4 +1,9 @@
-$Id: ChangeLog,v 1.8 2006-01-05 03:23:55 karl Exp $
+$Id: ChangeLog,v 1.9 2006-03-29 20:33:21 karl Exp $
+
+2006-01-04 Karl Lehenbauer <karl-bsd@sc.com>
+    * Now that we're loading in Tcl procs as well as a C extension
+      library, make the generation of the pkgIndex.tcl file be
+      correct, eh?
 
 2006-01-04 Karl Lehenbauer <karl-bsd@sc.com>
     * Add support for syslog -- yes there are other Tcl syslog interfaces,
