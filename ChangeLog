@@ -1,4 +1,4 @@
-$Id: ChangeLog,v 1.9 2006-03-29 20:33:21 karl Exp $
+$Id: ChangeLog,v 1.10 2006-12-20 10:56:53 karl Exp $
 
 2006-01-04 Karl Lehenbauer <karl-bsd@sc.com>
     * Now that we're loading in Tcl procs as well as a C extension
@@ -12,6 +12,13 @@ $Id: ChangeLog,v 1.9 2006-03-29 20:33:21 karl Exp $
 
     * configure.in, generic/bsd.c: Detect whether the setproctitle call
       is available so we can build on the BSD variant Mac OS X/Darwin.
+
+2005-11-28 Karl Lehenbauer <karl-bsd@sc.com>
+    * Add support for ::bsd::getkey to read a single key from the keybaord
+      in raw mode and return the character value as an integer
+
+2005-11-23 Karl Lehenbauer <karl-bsd@sc.com>
+    * Add support for MNT_JAILDEVFS and MNT_IGNORE flags when present.
 
 2005-11-28 Karl Lehenbauer <karl-bsd@sc.com>
     * Add support for ::bsd::getkey to read a single key from the keybaord
