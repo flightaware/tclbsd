@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.7 2006-01-05 23:39:51 karl Exp $
+ * $Id: bsd.c,v 1.8 2007-02-18 06:29:48 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -247,6 +247,7 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     int           objc;
     Tcl_Obj      *CONST objv[];
 {
+    rlim_t limitVal = 0;
     static CONST84 char *getSetOptions[] = { "get", "set", (char *) NULL};
     enum GSSubOptIdx {
             GSGetIdx, GSSetIdx
@@ -274,7 +275,7 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 
     Tcl_Obj        *resultObj = Tcl_GetObjResult (interp);
     int             result;
-    int             resource;
+    int             resource = 0;
     struct rlimit   rlimit;
 
     if (objc < 4 || objc > 5) {
@@ -341,7 +342,6 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     switch (getset) {
 	char resultString[32];
 	Tcl_Obj *stringObj;
-	rlim_t limitVal;
 	long longLimitVal;
 
 	static Tcl_Obj *unlimitedResultObj = NULL;
@@ -370,6 +370,9 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 		case SHHardIdx:
 		    limitVal = rlimit.rlim_max;
 		    break;
+
+		case SHBothIdx:
+		    panic ("unexpected/impossible code path");
 	    }
 
 	    if (limitVal == RLIM_INFINITY) {
@@ -408,6 +411,9 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 		case SHHardIdx:
 		    rlimit.rlim_max = longLimitVal;
 		    break;
+
+		case SHBothIdx:
+		    panic ("unexpected/impossible code path");
 	    }
 
 	    if (setrlimit (resource, &rlimit) < 0) {
@@ -421,82 +427,60 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 }
 
 /*-----------------------------------------------------------------------------
- * BSD_StatfsObjCmd --
+ * StatfsBufToList --
  *  
- * Implements the `statfs' command:
- *    statfs path
+ * Appends the contents of a statfs buffer to a Tcl list as key-value pairs.
  *  
  * Results:
  *      A standard Tcl result.
  *      
- * Side effects:
- *      See the user documentation.
  *-----------------------------------------------------------------------------
  */     
-int
-BSD_StatfsObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *CONST objv[];
+static int
+StatfsBufToList (Tcl_Interp *interp, Tcl_Obj *listObj, struct statfs *sp)
 {
-    char         *path;
     char          fstypename[MFSNAMELEN+1];
     char          mntonname[MNAMELEN+1];
     char          mntfromname[MNAMELEN+1];
-    Tcl_Obj      *resultObj = Tcl_GetObjResult (interp);
     Tcl_Obj      *flagListObj = Tcl_NewObj ();
-    struct statfs statfsbuf;
 
-    if (objc != 2) {
-	Tcl_WrongNumArgs(interp, 1, objv, "path");
-	return TCL_ERROR;
-    }
+    strncpy (fstypename, sp->f_fstypename, MFSNAMELEN);
+    strncpy (mntonname, sp->f_mntonname, MNAMELEN);
+    strncpy (mntfromname, sp->f_mntfromname, MNAMELEN);
 
-    path = Tcl_GetStringFromObj (objv[1], NULL);
-
-    if (statfs (path, &statfsbuf) < 0) {
-	Tcl_SetStringObj (resultObj, Tcl_PosixError (interp), -1);
-	return TCL_ERROR;
-    }
-
-    strncpy (fstypename, statfsbuf.f_fstypename, MFSNAMELEN);
-    strncpy (mntonname, statfsbuf.f_mntonname, MNAMELEN);
-    strncpy (mntfromname, statfsbuf.f_mntfromname, MNAMELEN);
-
-    if ((AppendNameLong (interp, resultObj, 
-			 "fundamentalFileSystemBlockSize", statfsbuf.f_bsize)
+    if ((AppendNameLong (interp, listObj, 
+			 "fundamentalFileSystemBlockSize", sp->f_bsize)
 	  == TCL_ERROR)
-      || (AppendNameLong (interp, resultObj, 
-			  "optimalTransferBlockSize", statfsbuf.f_iosize) 
+      || (AppendNameLong (interp, listObj, 
+			  "optimalTransferBlockSize", sp->f_iosize) 
 	  == TCL_ERROR)
-      || (AppendNameLong (interp, resultObj, 
-			  "totalDataBlocks", statfsbuf.f_blocks)
+      || (AppendNameLong (interp, listObj, 
+			  "totalDataBlocks", sp->f_blocks)
 	  == TCL_ERROR)
-      || (AppendNameLong (interp, resultObj, 
-			  "freeBlocks", statfsbuf.f_bfree)
+      || (AppendNameLong (interp, listObj, 
+			  "freeBlocks", sp->f_bfree)
 	  == TCL_ERROR)
-      || (AppendNameLong (interp, resultObj, 
-			  "availableFreeBlocks", statfsbuf.f_bavail)
+      || (AppendNameLong (interp, listObj, 
+			  "availableFreeBlocks", sp->f_bavail)
 	  == TCL_ERROR)
-      || (AppendNameLong (interp, resultObj, 
-			  "totalFileNodes", statfsbuf.f_files)
+      || (AppendNameLong (interp, listObj, 
+			  "totalFileNodes", sp->f_files)
 	  == TCL_ERROR)
-      || (AppendNameLong (interp, resultObj, 
-			  "freeFileNodes", statfsbuf.f_ffree)
+      || (AppendNameLong (interp, listObj, 
+			  "freeFileNodes", sp->f_ffree)
 	  == TCL_ERROR)
-      || (AppendNameString (interp, resultObj, 
+      || (AppendNameString (interp, listObj, 
 			  "fileSystemType", fstypename)
 	  == TCL_ERROR)
-      || (AppendNameString (interp, resultObj, 
+      || (AppendNameString (interp, listObj, 
 			  "mountPoint", mntonname)
 	  == TCL_ERROR)
-      || (AppendNameString (interp, resultObj, 
+      || (AppendNameString (interp, listObj, 
 			  "mountedFileSystem", mntfromname)
 	  == TCL_ERROR))
 	      return TCL_ERROR;
 
-#define FLAGCHECK(x, y) if (statfsbuf.f_flags & x) {if (Tcl_ListObjAppendElement (interp, flagListObj, Tcl_NewStringObj (y, -1)) != TCL_OK) return TCL_ERROR;}
+#define FLAGCHECK(x, y) if (sp->f_flags & x) {if (Tcl_ListObjAppendElement (interp, flagListObj, Tcl_NewStringObj (y, -1)) != TCL_OK) return TCL_ERROR;}
 
 #ifdef MNT_RDONLY
     FLAGCHECK (MNT_RDONLY, "readOnly")
@@ -606,10 +590,115 @@ BSD_StatfsObjCmd (clientData, interp, objc, objv)
     FLAGCHECK (MNT_IGNORE, "doNotShowInDF")
 #endif
 
-    if (AppendNameObj (interp, resultObj, "flags", flagListObj) == TCL_ERROR) return TCL_ERROR;
+    if (AppendNameObj (interp, listObj, "flags", flagListObj) == TCL_ERROR) return TCL_ERROR;
 
     return TCL_OK;
 }
+
+/*-----------------------------------------------------------------------------
+ * BSD_StatfsObjCmd --
+ *  
+ * Implements the `statfs' command:
+ *    statfs path
+ *  
+ * Results:
+ *      A standard Tcl result.
+ *      
+ * Side effects:
+ *      See the user documentation.
+ *-----------------------------------------------------------------------------
+ */     
+int
+BSD_StatfsObjCmd (clientData, interp, objc, objv)
+    ClientData    clientData;
+    Tcl_Interp   *interp;
+    int           objc;
+    Tcl_Obj      *CONST objv[];
+{
+    char         *path;
+    Tcl_Obj      *resultObj = Tcl_GetObjResult (interp);
+    struct statfs statfsbuf;
+
+    if (objc != 2) {
+	Tcl_WrongNumArgs(interp, 1, objv, "path");
+	return TCL_ERROR;
+    }
+
+    path = Tcl_GetStringFromObj (objv[1], NULL);
+
+    if (statfs (path, &statfsbuf) < 0) {
+	Tcl_SetStringObj (resultObj, Tcl_PosixError (interp), -1);
+	return TCL_ERROR;
+    }
+
+    return StatfsBufToList (interp, resultObj, &statfsbuf);
+}
+
+/*-----------------------------------------------------------------------------
+ * BSD_GetfsstatObjCmd --
+ *  
+ * Implements the `getfsstat' command:
+ *    getfsstat ?-wait|-nowait?
+ *  
+ * Results:
+ *      A standard Tcl result.
+ *      
+ * Side effects:
+ *      See the user documentation.
+ *-----------------------------------------------------------------------------
+ */     
+int
+BSD_GetfsstatObjCmd (clientData, interp, objc, objv)
+    ClientData    clientData;
+    Tcl_Interp   *interp;
+    int           objc;
+    Tcl_Obj      *CONST objv[];
+{
+    Tcl_Obj       *resultObj = Tcl_GetObjResult (interp);
+    struct statfs *statfsbufs;
+    int            bufsize;
+    int            i;
+    int            nMountedFilesystems;
+
+    if (objc > 2) {
+	Tcl_WrongNumArgs(interp, 1, objv, "?-wait|-nowait?");
+	return TCL_ERROR;
+    }
+
+    nMountedFilesystems = getfsstat (NULL, 0, MNT_NOWAIT);
+    if (nMountedFilesystems < 0) {
+	Tcl_SetStringObj (resultObj, Tcl_PosixError (interp), -1);
+	return TCL_ERROR;
+    }
+
+    bufsize = nMountedFilesystems * sizeof (struct statfs);
+
+    statfsbufs = (struct statfs *)ckalloc (bufsize);
+
+    if (getfsstat (statfsbufs, bufsize, MNT_NOWAIT) < 0) {
+	Tcl_SetStringObj (resultObj, Tcl_PosixError (interp), -1);
+	ckfree ((void *)statfsbufs);
+	return TCL_ERROR;
+    }
+
+    for (i = 0; i < nMountedFilesystems; i++) {
+	Tcl_Obj *listObj = Tcl_NewObj ();
+
+        if (StatfsBufToList (interp, listObj, statfsbufs) == TCL_ERROR) {
+	    ckfree ((void *)statfsbufs);
+	    return TCL_ERROR;
+	}
+
+	if (Tcl_ListObjAppendList (interp, resultObj, listObj) == TCL_ERROR) {
+	    ckfree ((void *)statfsbufs);
+	    return TCL_ERROR;
+	}
+    }
+
+    ckfree ((void *)statfsbufs);
+    return TCL_OK;
+}
+
 
 /*-----------------------------------------------------------------------------
  * BSD_GetLoadAvgObjCmd --

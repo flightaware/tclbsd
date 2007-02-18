@@ -1,7 +1,7 @@
 /*
  * tclbsd.c --
  *
- * $Id: tclbsd.c,v 1.5 2006-01-05 04:38:02 karl Exp $
+ * $Id: tclbsd.c,v 1.6 2007-02-18 06:29:48 karl Exp $
  *
  *
  */
@@ -73,6 +73,12 @@ Bsd_Init(Tcl_Interp *interp)
     Tcl_CreateObjCommand (interp,
 			  "bsd::statfs",
                           BSD_StatfsObjCmd,
+                          (ClientData) NULL,
+                          (Tcl_CmdDeleteProc*) NULL);
+
+    Tcl_CreateObjCommand (interp,
+			  "bsd::getfsstat",
+                          BSD_GetfsstatObjCmd,
                           (ClientData) NULL,
                           (Tcl_CmdDeleteProc*) NULL);
 

@@ -16,7 +16,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.h,v 1.4 2006-01-05 04:38:02 karl Exp $
+ * $Id: bsd.h,v 1.5 2007-02-18 06:29:48 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -28,6 +28,9 @@ BSD_RlimitObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *
 
 extern int
 BSD_StatfsObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+
+extern int
+BSD_GetfsstatObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
 
 extern int
 BSD_GetLoadAvgObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
