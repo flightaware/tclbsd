@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.9 2007-02-27 06:49:29 karl Exp $
+ * $Id: bsd.c,v 1.10 2007-02-27 06:59:31 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -659,13 +659,27 @@ BSD_GetfsstatObjCmd (clientData, interp, objc, objv)
     int            bufsize;
     int            i;
     int            nMountedFilesystems;
+    int            waitOption = MNT_NOWAIT;
+    char          *subOption;
 
     if (objc > 2) {
+      usage:
 	Tcl_WrongNumArgs(interp, 1, objv, "?-wait|-nowait?");
 	return TCL_ERROR;
     }
 
-    nMountedFilesystems = getfsstat (NULL, 0, MNT_NOWAIT);
+    if (objc == 2) {
+	subOption = Tcl_GetStringFromObj (objv[1], NULL);
+	if (strcmp (subOption, "-nowait") == 0) {
+	    waitOption = MNT_NOWAIT;
+	} else if (strcmp (subOption, "-wait") == 0) {
+	    waitOption = MNT_WAIT;
+	} else {
+	    goto usage;
+	}
+    }
+
+    nMountedFilesystems = getfsstat (NULL, 0, waitOption);
     if (nMountedFilesystems < 0) {
 	Tcl_SetStringObj (resultObj, Tcl_PosixError (interp), -1);
 	return TCL_ERROR;

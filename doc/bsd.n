@@ -14,7 +14,7 @@ BSD \- Tcl interface to various BSD UNIX functions
 .br
 \fB::bsd::statfs \fI path\fR
 .br
-\fB::bsd::getfsstat
+\fB::bsd::getfsstat \fI?-wait|-nowait?\fR
 .br
 .SH DESCRIPTION
 The BSD extension provides Tcl programs with new Tcl commands to interface
@@ -69,4 +69,11 @@ provided, which can include \fBreadOnly\fR, \fBsynchronous\fR,
 and \fBaclsEnabled\fR.
 .PP
 \fB::bsd::getfsstat\fR functions like \fBstatfs\fR, except that it returns
-a list of lists with information about all mounted filesystems.
+a list of lists with information about all mounted filesystems.  If
+\fI-nowait\fR or no option is specified, \fBgetfsstat\fR will directly return
+the filesystem information retained in the kernel to avoid delays caused
+by waiting for updated information from a filesystem that is perhaps
+temporarily unable to respond, at the cost of the data perhaps not reflecting
+the absolutely current status of the filesystem.  As some of the information 
+returned may be out of date, if \fI-wait\fR is specified, \fBgetfsstat\fR will
+request updated information for each mounted filesystem prior to returning.
