@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.8 2007-02-18 06:29:48 karl Exp $
+ * $Id: bsd.c,v 1.9 2007-02-27 06:49:29 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -684,12 +684,12 @@ BSD_GetfsstatObjCmd (clientData, interp, objc, objv)
     for (i = 0; i < nMountedFilesystems; i++) {
 	Tcl_Obj *listObj = Tcl_NewObj ();
 
-        if (StatfsBufToList (interp, listObj, statfsbufs) == TCL_ERROR) {
+        if (StatfsBufToList (interp, listObj, &statfsbufs[i]) == TCL_ERROR) {
 	    ckfree ((void *)statfsbufs);
 	    return TCL_ERROR;
 	}
 
-	if (Tcl_ListObjAppendList (interp, resultObj, listObj) == TCL_ERROR) {
+	if (Tcl_ListObjAppendElement (interp, resultObj, listObj) == TCL_ERROR) {
 	    ckfree ((void *)statfsbufs);
 	    return TCL_ERROR;
 	}

@@ -14,6 +14,8 @@ BSD \- Tcl interface to various BSD UNIX functions
 .br
 \fB::bsd::statfs \fI path\fR
 .br
+\fB::bsd::getfsstat
+.br
 .SH DESCRIPTION
 The BSD extension provides Tcl programs with new Tcl commands to interface
 to various system calls and library routines present in BSD UNIX.
@@ -65,3 +67,6 @@ provided, which can include \fBreadOnly\fR, \fBsynchronous\fR,
 \fBkerberosUidMapping\fR, \fBwebNFS\fR, \fBfilesystemStoredLocally\fR,
 \fBquotasEnabled\fR, \fBrootFilesystem\fR, \fBuserMounted\fR, \fBmultiLabel\fR,
 and \fBaclsEnabled\fR.
+.PP
+\fB::bsd::getfsstat\fR functions like \fBstatfs\fR, except that it returns
+a list of lists with information about all mounted filesystems.
