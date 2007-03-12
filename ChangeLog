@@ -1,4 +1,7 @@
-$Id: ChangeLog,v 1.14 2007-02-27 06:59:31 karl Exp $
+$Id: ChangeLog,v 1.15 2007-03-12 06:21:01 karl Exp $
+
+2007-03-12 karl
+    * Update to Tcl Extension Architecture (TEA) 3.6.
 
 2007-02-27 karl
     * Made getfsstat actually work.

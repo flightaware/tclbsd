@@ -1,12 +1,116 @@
+2007-03-07  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4 (Darwin): s/CFLAGS/CPPFLAGS/ in -mmacosx-version-min check.
+
+2007-02-15  Jeff Hobbs  <jeffh@ActiveState.com>
+
+	* tcl.m4: correct private header check to search in generic subdir
+
+2007-02-09  Jeff Hobbs  <jeffh@ActiveState.com>
+
+	*** Bump to TEA_VERSION 3.6 ***
+
+	* tcl.m4: correct -d to -f
+	(TEA_CONFIG_CFLAGS): SHLIB_SUFFIX is .so on HP ia64 [Bug 1615058]
+	
+2007-02-08  Jeff Hobbs  <jeffh@ActiveState.com>
+
+	* tcl.m4 (TEA_PRIVATE_TCL_HEADERS, TEA_PRIVATE_TK_HEADERS): check
+	that the dirs actually have private headers. [Bug 1631922]
+
+2007-02-04  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4: add caching to -pipe check.
+
+2007-01-25  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4: integrate CPPFLAGS into CFLAGS as late as possible and 
+	move (rather than duplicate) -isysroot flags from CFLAGS to CPPFLAGS to
+	avoid errors about multiple -isysroot flags from some older gcc builds.
+
+2006-01-19  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4: ensure CPPFLAGS env var is used when set. [Bug 1586861]
+	(Darwin): add -isysroot and -mmacosx-version-min flags to CPPFLAGS when
+	present in CFLAGS to avoid discrepancies between what headers configure
+	sees during preprocessing tests and compiling tests.
+
+2006-12-19  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4 (Darwin): --enable-64bit: verify linking with 64bit -arch flag
+	succeeds before enabling 64bit build.
+
+2006-12-16  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4 (Linux): fix previous change to use makefile variable
+	LDFLAGS_DEFAULT instead of LDFLAGS in SHLIB_LD, to ensure linker
+	flags in sampleextension Makefile are picked up.
+
+2006-11-26  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4 (Linux): --enable-64bit support. [Patch 1597389], [Bug 1230558]
+
+2006-08-18  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4 (Darwin): add support for --enable-64bit on x86_64, for
+	universal builds including x86_64 and for use of -mmacosx-version-min
+	instead of MACOSX_DEPLOYMENT_TARGET. For Tk extensions, remove 64-bit
+	arch flags from CFLAGS like in the Tk configure, as neither TkAqua nor
+	TkX11 can be built for 64-bit at present.
+
+2006-03-28  Jeff Hobbs  <jeffh@ActiveState.com>
+
+	* tcl.m4: []-quote AC_DEFUN functions.
+	(TEA_PATH_TKCONFIG): Fixed Windows-specific check for tkConfig.sh.
+	(TEA_MAKE_LIB): Prepend 'lib' for Windows-gcc configs.
+
+2006-03-07  Joe English  <jenglish@users.sourceforge.net>
+
+	* tcl.m4: Set SHLIB_LD_FLAGS='${LIBS}' on NetBSD,
+	as per the other *BSD variants [Bug 1334613].
+
+2006-01-25  Jeff Hobbs  <jeffh@ActiveState.com>
+
+	*** Bump to TEA version 3.5 ***
+
+	* tcl.m4: keep LD_SEARCH_FLAGS and CC_SEARCH_FLAGS synchronous
+	with core tcl.m4 meaning.
+
+2006-01-24  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4 (Darwin): use makefile variable LDFLAGS_DEFAULT instead of
+	LDFLAGS in SHLIB_LD, to ensure linker flags in sampleextension Makefile
+	are picked up. [Bug 1403343]
+
+2006-01-23  Jeff Hobbs  <jeffh@ActiveState.com>
+
+	* tcl.m4: add C:/Tcl/lib and C:/Progra~1/Tcl/lib dirs to check for
+	*Config.sh on Windows. [Bug 1407544]
+
+2006-01-23  Daniel Steffen  <das@users.sourceforge.net>
+
+	* tcl.m4 (Darwin): for Tk extensions, remove -arch ppc64 from CFLAGS
+	like in the Tk configure, as neither TkAqua nor TkX11 can be built for
+	64bit at present (no 64bit GUI libraries).
+
+2006-01-22  Jeff Hobbs  <jeffh@ActiveState.com>
+
+	* tcl.m4: restore system=windows on Windows.
+	Remove error if 'ar' isn't found (it may not be on Windows).
+	Do not add -lxnet or define _XOPEN_SOURCE on HP-UX by default.
+	Ensure the C|LDFLAGS_DEFAULT gets the fully sub'd value at
+	configure time.
+
 2006-01-10  Daniel Steffen  <das@users.sourceforge.net>
 
-	* tcl.m4: add caching, use AC_CACHE_CHECK instead of AC_CACHE_VAL where
-	possible, consistent message quoting, sync relevant tcl/unix/tcl.m4 HEAD
-	changes and gratuitous formatting differences (notably sunc removal of
-	support for for ancient BSD's, IRIX 4, RISCos and Ultrix by kennykb),
-	Darwin improvements to TEA_LOAD_*CONFIG to make linking work against
-	Tcl/Tk frameworks installed in arbitrary location, change TEA_PROG_*
-	search order (look in *_BIN_DIR parents before *_PREFIX).
+	* tcl.m4: add caching, use AC_CACHE_CHECK instead of AC_CACHE_VAL
+	where possible, consistent message quoting, sync relevant
+	tcl/unix/tcl.m4 HEAD changes and gratuitous formatting differences
+	(notably sunc removal of support for for ancient BSD's, IRIX 4,
+	RISCos and Ultrix by kennykb), Darwin improvements to
+	TEA_LOAD_*CONFIG to make linking work against Tcl/Tk frameworks
+	installed in arbitrary location, change TEA_PROG_* search order
+	(look in *_BIN_DIR parents before *_PREFIX).
 
 2006-01-05  Jeff Hobbs  <jeffh@ActiveState.com>
 
