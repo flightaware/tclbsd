@@ -16,6 +16,14 @@ BSD \- Tcl interface to various BSD UNIX functions
 .br
 \fB::bsd::getfsstat \fI?-wait|-nowait?\fR
 .br
+\fB::bsd::syslog open \fIident logopt facility\fR
+.br
+\fB::bsd::syslog close\fR
+.br
+\fB::bsd::syslog logmask \fIpriority\fR
+.br
+\fB::bsd::syslog log \fIpriority message\fR
+.br
 .SH DESCRIPTION
 The BSD extension provides Tcl programs with new Tcl commands to interface
 to various system calls and library routines present in BSD UNIX.
@@ -77,3 +85,34 @@ temporarily unable to respond, at the cost of the data perhaps not reflecting
 the absolutely current status of the filesystem.  As some of the information 
 returned may be out of date, if \fI-wait\fR is specified, \fBgetfsstat\fR will
 request updated information for each mounted filesystem prior to returning.
+.PP
+\fB::bsd::syslog\fR provides a direct interface to the syslog library
+to provide a way to write messages into the system log.  
+\fB::bsd::syslog open\fR takes an identifier, a list of zero or more
+\fIlog options\fR, and a facility name.
+The facility name can be one of \fBauth\fR, \fBauthpriv\fR, \fBconsole\fR,
+\fBcron\fR, \fBdaemon\fR, \fBftp\fR, \fBkern\fR, \fBlpr\fR, \fBmail\fR,
+\fBnews\fR, \fBntp\fR, \fBsecurity\fR, \fBsyslog\fR, \fBuser\fR, \fBuucp\fR,
+\fBlocal0\fR, \fBlocal1\fR, \fBlocal2\fR, \fBlocal3\fR, \fBlocal4\fR,
+\fBlocal5\fR, \fBlocal6\fR, or \fBlocal7\fR.
+.PP
+Log options can include \fBconsole\fR, which causes the message to be
+logged on the console if there are errors in sending it, \fBno_delay\fR,
+which theoretically says not to delay opening the syslog connection until
+the first syslog call is made, but check your documentation on syslog(3)
+to see if that's really true, \fBpid\fR, which says to log the process
+ID along with whatever else, and \fBperror\fR, which says to log the
+message to stderr as well as to the system log.
+.PP
+\fB::bsd::syslog log\fR takes a priority and a message.
+Priority can be one of 
+\fBemerg\fR, \fBalert\fR, \fBcrit\fR, \fBerr\fR, \fBwarning\fR, 
+\fBnotice\fR, \fBinfo\fR, or \fBdebug, in descending order of priority.
+Check your documentation on your syslog library, high priority messages
+do stuff besides logging, like blasting to all logged in users, while
+\fB::bsd::syslog close\fR closes the connection to the system log.
+Finally, .fB::bsd::syslog logmask\fR sets the log priority mask and masks all priorities
+up to and including the specified one.  For instance, if you invoked
+the logmask option with the \fBinfo\fR priority, both \fIinfo\fR and
+\fIdebug\fR log messages would be suppressed.
+

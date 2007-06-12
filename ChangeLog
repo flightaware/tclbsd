@@ -1,4 +1,7 @@
-$Id: ChangeLog,v 1.15 2007-03-12 06:21:01 karl Exp $
+$Id: ChangeLog,v 1.16 2007-06-12 05:37:55 karl Exp $
+
+2007-06-12 karl
+    * Document the ::bsd::syslog command.
 
 2007-03-12 karl
     * Update to Tcl Extension Architecture (TEA) 3.6.
