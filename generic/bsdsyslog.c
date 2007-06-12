@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsdsyslog.c,v 1.2 2006-01-05 04:38:02 karl Exp $
+ * $Id: bsdsyslog.c,v 1.3 2007-06-12 22:13:27 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -23,6 +23,8 @@
 
 #define SYSLOG_NAMES
 #include <sys/syslog.h>
+
+#define TCLBSD_LOG_ERROR 1
 
 /*-----------------------------------------------------------------------------
  * GetSyslogFacility --
@@ -35,7 +37,7 @@
  *-----------------------------------------------------------------------------
  */     
 static int
-GetSyslogFacility (char *facilityName)
+GetSyslogFacility (Tcl_Interp *interp, char *facilityName, int flags)
 {
     CODE *codePtr;
 
@@ -43,6 +45,14 @@ GetSyslogFacility (char *facilityName)
         if (strcmp (facilityName, codePtr->c_name) == 0) {
 	    return codePtr->c_val;
 	}
+    }
+
+    if (flags & TCLBSD_LOG_ERROR) {
+       Tcl_AppendResult (interp, "bad value for facility: must be one of");
+
+       for (codePtr = facilitynames; codePtr->c_name != NULL; codePtr++) {
+           Tcl_AppendResult (interp, " '", codePtr->c_name, "'");
+       }
     }
     return -1;
 }
@@ -62,7 +72,7 @@ GetSyslogFacility (char *facilityName)
  *-----------------------------------------------------------------------------
  */     
 static int
-GetSyslogPriority (char *priorityName)
+GetSyslogPriority (Tcl_Interp *interp, char *priorityName, int flags)
 {
     CODE *codePtr;
 
@@ -70,6 +80,14 @@ GetSyslogPriority (char *priorityName)
         if (strcmp (priorityName, codePtr->c_name) == 0) {
 	    return codePtr->c_val;
 	}
+    }
+
+    if (flags & TCLBSD_LOG_ERROR) {
+       Tcl_AppendResult (interp, "bad value for priority: must be one of");
+
+       for (codePtr = prioritynames; codePtr->c_name != NULL; codePtr++) {
+           Tcl_AppendResult (interp, " '", codePtr->c_name, "'");
+       }
     }
     return -1;
 }
@@ -126,9 +144,8 @@ BSD_SyslogObjCmd (clientData, interp, objc, objv)
 	    return TCL_ERROR;
 	}
 
-	priority = GetSyslogPriority (Tcl_GetString (objv[2]));
+	priority = GetSyslogPriority (interp, Tcl_GetString (objv[2]), TCLBSD_LOG_ERROR);
 	if (priority == -1) {
-	   /* NB - put an appropriate error message in here */
 	   return TCL_ERROR;
 	}
 
@@ -169,9 +186,8 @@ BSD_SyslogObjCmd (clientData, interp, objc, objv)
 	    logopt |= logOpts[logoptIndex];
 	}
 
-	facility = GetSyslogFacility (Tcl_GetString (objv[4]));
+	facility = GetSyslogFacility (interp, Tcl_GetString (objv[4]), TCLBSD_LOG_ERROR);
 	if (facility == -1) {
-	   /* NB - put an appropriate error message in here */
 	   return TCL_ERROR;
 	}
 
@@ -197,10 +213,8 @@ BSD_SyslogObjCmd (clientData, interp, objc, objv)
 	    return TCL_ERROR;
 	}
 
-	priority = GetSyslogPriority (Tcl_GetString (objv[2]));
-
+	priority = GetSyslogPriority (interp, Tcl_GetString (objv[2]), TCLBSD_LOG_ERROR);
 	if (priority == -1) {
-	   /* NB - put an appropriate error message in here */
 	   return TCL_ERROR;
 	}
 	setlogmask ( LOG_UPTO (priority));

@@ -1,7 +1,10 @@
-$Id: ChangeLog,v 1.16 2007-06-12 05:37:55 karl Exp $
+$Id: ChangeLog,v 1.17 2007-06-12 22:13:27 karl Exp $
 
 2007-06-12 karl
     * Document the ::bsd::syslog command.
+
+    * Emit reasonable error messages when the facility or priority is
+      unrecognized.
 
 2007-03-12 karl
     * Update to Tcl Extension Architecture (TEA) 3.6.
