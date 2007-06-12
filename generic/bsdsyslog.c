@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsdsyslog.c,v 1.3 2007-06-12 22:13:27 karl Exp $
+ * $Id: bsdsyslog.c,v 1.4 2007-06-12 22:44:04 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -48,10 +48,10 @@ GetSyslogFacility (Tcl_Interp *interp, char *facilityName, int flags)
     }
 
     if (flags & TCLBSD_LOG_ERROR) {
-       Tcl_AppendResult (interp, "bad value for facility: must be one of");
+       Tcl_AppendResult (interp, "bad value for facility: must be one of", NULL);
 
        for (codePtr = facilitynames; codePtr->c_name != NULL; codePtr++) {
-           Tcl_AppendResult (interp, " '", codePtr->c_name, "'");
+           Tcl_AppendResult (interp, " '", codePtr->c_name, "'", NULL);
        }
     }
     return -1;
@@ -83,10 +83,10 @@ GetSyslogPriority (Tcl_Interp *interp, char *priorityName, int flags)
     }
 
     if (flags & TCLBSD_LOG_ERROR) {
-       Tcl_AppendResult (interp, "bad value for priority: must be one of");
+       Tcl_AppendResult (interp, "bad value for priority: must be one of", NULL);
 
        for (codePtr = prioritynames; codePtr->c_name != NULL; codePtr++) {
-           Tcl_AppendResult (interp, " '", codePtr->c_name, "'");
+           Tcl_AppendResult (interp, " '", codePtr->c_name, "'", NULL);
        }
     }
     return -1;
