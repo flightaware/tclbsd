@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsdsyslog.c,v 1.4 2007-06-12 22:44:04 karl Exp $
+ * $Id: bsdsyslog.c,v 1.5 2007-06-13 06:22:37 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -172,6 +172,14 @@ BSD_SyslogObjCmd (clientData, interp, objc, objv)
 	    Tcl_WrongNumArgs (interp, 2, objv, "ident logopt facility");
 	    return TCL_ERROR;
 	}
+
+	/* OK, ident needs to be a const char *, i.e. it needs to not change
+	 * behind openlog/syslog's back.  How shall we implement that?
+	 * Should we malloc and copy?  Nah, let's just increment the
+	 * reference count on the object so that Tcl will leave it the
+	 * heck alone. -kl
+	 */
+	 Tcl_IncrRefCount (objv[2]);
 	ident = Tcl_GetString (objv[2]);
 
 	if (Tcl_ListObjGetElements (interp, objv[3], &logoptObjc, &logoptObjv) == TCL_ERROR) {

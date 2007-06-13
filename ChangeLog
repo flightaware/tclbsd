@@ -1,4 +1,10 @@
-$Id: ChangeLog,v 1.17 2007-06-12 22:13:27 karl Exp $
+$Id: ChangeLog,v 1.18 2007-06-13 06:22:37 karl Exp $
+
+2007-06-13 karl
+    * The ident to openlog must be a const char *, i.e. it needs to not
+      change after the openlog, so use Tcl_IncrRefCount on the Tcl object
+      containing the ident to prevent the Tcl interpreter from later
+      taking the space for some other purpose.
 
 2007-06-12 karl
     * Document the ::bsd::syslog command.
