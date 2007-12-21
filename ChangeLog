@@ -1,4 +1,9 @@
-$Id: ChangeLog,v 1.18 2007-06-13 06:22:37 karl Exp $
+$Id: ChangeLog,v 1.19 2007-12-21 08:23:19 karl Exp $
+
+2007-12-21 karl
+    * Fold helper procs from tclbsd.tcl into bsd_procs.tcl.
+
+    * Version bump to 1.1.
 
 2007-06-13 karl
     * The ident to openlog must be a const char *, i.e. it needs to not
