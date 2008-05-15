@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.10 2007-02-27 06:59:31 karl Exp $
+ * $Id: bsd.c,v 1.11 2008-05-15 19:36:35 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -797,4 +797,30 @@ BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
     Tcl_SetObjResult (interp, Tcl_NewStringObj ("setproctitle undefined on this architecture", -1));
     return TCL_ERROR;
 #endif
+}
+
+/*-----------------------------------------------------------------------------
+ * BSD_AbortCmd --
+ *  
+ * Implements the `abort' command:
+ *    abort
+ *  
+ * Results:
+ *      An abort signal is generated and probably aborts Tcl.
+ *
+ * Side effects:
+ *      See the user documentation.
+ *-----------------------------------------------------------------------------
+ */     
+int
+BSD_AbortCmd (clientData, interp, objc, objv)
+    ClientData    clientData;
+    Tcl_Interp   *interp;
+    int           objc;
+    Tcl_Obj      *CONST objv[];
+{
+
+    abort();
+
+    return TCL_OK;
 }

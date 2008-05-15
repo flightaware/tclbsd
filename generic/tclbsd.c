@@ -1,7 +1,7 @@
 /*
  * tclbsd.c --
  *
- * $Id: tclbsd.c,v 1.6 2007-02-18 06:29:48 karl Exp $
+ * $Id: tclbsd.c,v 1.7 2008-05-15 19:36:35 karl Exp $
  *
  *
  */
@@ -103,6 +103,12 @@ Bsd_Init(Tcl_Interp *interp)
     Tcl_CreateObjCommand (interp,
 			  "bsd::syslog",
                           BSD_SyslogObjCmd,
+                          (ClientData) NULL,
+                          (Tcl_CmdDeleteProc*) NULL);
+
+    Tcl_CreateObjCommand (interp,
+			  "bsd::abort",
+                          BSD_AbortCmd,
                           (ClientData) NULL,
                           (Tcl_CmdDeleteProc*) NULL);
 
