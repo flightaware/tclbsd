@@ -24,6 +24,8 @@ BSD \- Tcl interface to various BSD UNIX functions
 .br
 \fB::bsd::syslog log \fIpriority message\fR
 .br
+\fB::bsd::abort\fR
+.br
 .SH DESCRIPTION
 The BSD extension provides Tcl programs with new Tcl commands to interface
 to various system calls and library routines present in BSD UNIX.
@@ -115,4 +117,7 @@ Finally, .fB::bsd::syslog logmask\fR sets the log priority mask and masks all pr
 up to and including the specified one.  For instance, if you invoked
 the logmask option with the \fBinfo\fR priority, both \fIinfo\fR and
 \fIdebug\fR log messages would be suppressed.
-
+.PP
+\fB::bsd::abort\fR causes abnormal program termination to occur by issuing
+an abort signal and will work unless the SIGABRT signal is being caught
+and the signal handler does not return.
