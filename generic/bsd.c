@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.11 2008-05-15 19:36:35 karl Exp $
+ * $Id: bsd.c,v 1.12 2008-05-27 15:32:30 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -247,7 +247,6 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     int           objc;
     Tcl_Obj      *CONST objv[];
 {
-    rlim_t limitVal = 0;
     static CONST84 char *getSetOptions[] = { "get", "set", (char *) NULL};
     enum GSSubOptIdx {
             GSGetIdx, GSSetIdx
@@ -262,15 +261,15 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     } hardsoft;
 
     static CONST84 char *limitOptions[] = { 
-            "core", "cpu", "data", "fsize",
+            "virtual", "core", "cpu", "data", "fsize",
              "memlock", "nofile", "nproc", "rss", 
-             "stack",
+             "sockbuf", "stack",
              (char *) NULL};
 
     enum ISubOptIdx {
-            ICoreIdx, ICpuIdx, IDataIdx, IFsizeIdx,
+            IVirtualMemoryIdx, ICoreIdx, ICpuIdx, IDataIdx, IFsizeIdx,
             IMemlockIdx, INofileIdx, INprocIdx, IRssIdx,
-            IStackIdx
+            ISockBufIdx, IStackIdx
     } limitID;
 
     Tcl_Obj        *resultObj = Tcl_GetObjResult (interp);
@@ -302,6 +301,9 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     }
  
     switch (limitID) {
+	case IVirtualMemoryIdx:
+	    resource = RLIMIT_AS;
+
         case ICoreIdx:
 	    resource = RLIMIT_CORE;
 	    break;
@@ -334,15 +336,17 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 	    resource = RLIMIT_RSS;
 	    break;
 
+	case ISockBufIdx:
+	    resource = RLIMIT_SBSIZE;
+	    break;
+
         case IStackIdx:
 	    resource = RLIMIT_STACK;
 	    break;
     }
 
     switch (getset) {
-	char resultString[32];
-	Tcl_Obj *stringObj;
-	long longLimitVal;
+	Tcl_WideInt limitVal;
 
 	static Tcl_Obj *unlimitedResultObj = NULL;
 
@@ -376,12 +380,14 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 	    }
 
 	    if (limitVal == RLIM_INFINITY) {
-		Tcl_ListObjAppendElement (interp, resultObj, unlimitedResultObj);
+		if (Tcl_ListObjAppendElement (interp, resultObj, unlimitedResultObj) == TCL_ERROR) {
+		    return TCL_ERROR;
+		}
 		Tcl_IncrRefCount (unlimitedResultObj);
 	    } else {
-		sprintf(resultString, "%qd", limitVal);
-		stringObj = Tcl_NewStringObj (resultString, -1);
-		Tcl_ListObjAppendElement (interp, resultObj, stringObj);
+		if (Tcl_ListObjAppendElement (interp, resultObj, Tcl_NewWideIntObj (limitVal)) == TCL_ERROR) {
+		    return TCL_ERROR;
+		}
 	    }
 
 	    break;
@@ -393,9 +399,13 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 		return TCL_ERROR;
 	    }
 
-	    if (Tcl_GetLongFromObj (interp, objv[4], &longLimitVal) 
-		  == TCL_ERROR) {
-		return TCL_ERROR;
+	    if (strcmp (Tcl_GetString (objv[4]), "unlimited") == 0) {
+		limitVal = RLIM_INFINITY;
+	    } else {
+		if (Tcl_GetWideIntFromObj (interp, objv[4], &limitVal) 
+		      == TCL_ERROR) {
+		    return TCL_ERROR;
+		}
 	    }
 
 	    if (getrlimit (resource, &rlimit) < 0) {
@@ -405,11 +415,11 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 	   
             switch (hardsoft) {
 		case SHSoftIdx:
-		    rlimit.rlim_cur = longLimitVal;
+		    rlimit.rlim_cur = limitVal;
 		    break;
 
 		case SHHardIdx:
-		    rlimit.rlim_max = longLimitVal;
+		    rlimit.rlim_max = limitVal;
 		    break;
 
 		case SHBothIdx:

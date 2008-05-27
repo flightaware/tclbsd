@@ -35,9 +35,11 @@ run queue as a list, representing averages over the last 1, 5, and 15
 minutes.
 .PP
 \fB::bsd::rlimit\fR lets you get and set the current soft and hard settings 
-for resource limits.  See the Berkeley manpage for \fIgetrlimit\fR and 
-\fIsetrlimit\fR
-for details.
+for resource limits.  You can specify a 64-bit integer value for any of the
+limits or \Bunlimited\fR to indicate that there should be no limit.
+.PP
+See the Berkeley manpage for \fIgetrlimit\fR and \fIsetrlimit\fR
+for details on the options available and what they do.
 .PP
 \fB::bsd::rusage\fR returns the cumulative resource usage for the current
 process, as a list of key-value pairs, suitable for loading into an array

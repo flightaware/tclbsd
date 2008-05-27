@@ -1,4 +1,19 @@
-$Id: ChangeLog,v 1.20 2008-05-15 19:36:35 karl Exp $
+$Id: ChangeLog,v 1.21 2008-05-27 15:32:30 karl Exp $
+
+2008-05-27 karl
+    * Add new rlimit-settable values for max virtual memory mapped ("virtual")
+      and max socket buffer memory (mbufs, in bytes) ("sockbuf").
+
+    * You can now specify "unlimited" as an argument to rlimit value setting
+      options and tclbsd will substitute RLIM_INFINITY as the value.
+
+    * Switched the data type of the variable that we use for limits from
+      long to Tcl wide int, because rlim_t type is a 64 bit integer.
+
+    * Got rid of intermediate value generation with sprintf -- just
+      using standard Tcl functions like Tcl_NewWideIntObj instead.
+
+    * Checking error returns in a couple places where we weren't.
 
 2008-04-15 karl
     * Add ::bsd::abort command to invoke the abort() system call.
