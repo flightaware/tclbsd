@@ -13,7 +13,7 @@
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.12 2008-05-27 15:32:30 karl Exp $
+ * $Id: bsd.c,v 1.13 2008-06-23 16:07:33 karl Exp $
  *-----------------------------------------------------------------------------
  */
 
@@ -337,8 +337,13 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 	    break;
 
 	case ISockBufIdx:
+#ifdef RLIMIT_SBSIZE
 	    resource = RLIMIT_SBSIZE;
 	    break;
+#else
+	    Tcl_SetStringObj (resultObj, "sockbuf option not available on this OS", -1);
+	    return TCL_ERROR;
+#endif // RLIMIT_SBSIZE 
 
         case IStackIdx:
 	    resource = RLIMIT_STACK;

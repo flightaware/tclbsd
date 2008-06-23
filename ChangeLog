@@ -1,4 +1,11 @@
-$Id: ChangeLog,v 1.21 2008-05-27 15:32:30 karl Exp $
+$Id: ChangeLog,v 1.22 2008-06-23 16:07:33 karl Exp $
+
+2008-06-23 karl
+    * sockbuf is not available on Mac OS X Leopard.  Have it be an error
+      to try to get or set that value.
+
+    * OS X uses termios rather than termio so fix the Makefile so it will
+      build properly on OS X.
 
 2008-05-27 karl
     * Add new rlimit-settable values for max virtual memory mapped ("virtual")
