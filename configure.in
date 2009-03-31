@@ -21,9 +21,17 @@ dnl	to configure the system for the local environment.
 AC_INIT([BSD], [1.2])
 
 #-----------
-# Check to see if we have setproctitle
+# Check to see if we have includes statvfs.h
 #-----------
-AC_CHECK_FUNCS(setproctitle)
+AC_CHECK_HEADERS(sys/vfs.h)
+
+
+#-----------
+# Check to see if we have functions setproctitle, statfs, statvfs
+#-----------
+AC_CHECK_FUNCS(setproctitle statfs statvfs getfsstat)
+
+AC_CHECK_MEMBERS(struct statfs.f_iosize)
 
 #--------------------------------------------------------------------
 # Call TEA_INIT as the first TEA_ macro to set up initial vars.

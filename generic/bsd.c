@@ -25,6 +25,10 @@
 #include <sys/param.h>
 #include <sys/mount.h>
 
+#ifdef HAVE_SYS_VFS_H
+#  include <sys/vfs.h>
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -341,7 +345,7 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 	    resource = RLIMIT_SBSIZE;
 	    break;
 #else
-	    Tcl_SetStringObj (resultObj, "sockbuf option not available on this OS", -1);
+	    Tcl_SetStringObj (resultObj, "sockbuf option is not available on this operating system", -1);
 	    return TCL_ERROR;
 #endif // RLIMIT_SBSIZE 
 
@@ -454,21 +458,26 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 static int
 StatfsBufToList (Tcl_Interp *interp, Tcl_Obj *listObj, struct statfs *sp)
 {
+    Tcl_Obj      *flagListObj = Tcl_NewObj ();
+
+#ifdef MFSNAMELEN
     char          fstypename[MFSNAMELEN+1];
     char          mntonname[MNAMELEN+1];
     char          mntfromname[MNAMELEN+1];
-    Tcl_Obj      *flagListObj = Tcl_NewObj ();
 
     strncpy (fstypename, sp->f_fstypename, MFSNAMELEN);
     strncpy (mntonname, sp->f_mntonname, MNAMELEN);
     strncpy (mntfromname, sp->f_mntfromname, MNAMELEN);
+#endif
 
     if ((AppendNameLong (interp, listObj, 
 			 "fundamentalFileSystemBlockSize", sp->f_bsize)
 	  == TCL_ERROR)
+#ifdef HAVE_STRUCT_STATFS_F_IOSIZE
       || (AppendNameLong (interp, listObj, 
 			  "optimalTransferBlockSize", sp->f_iosize) 
 	  == TCL_ERROR)
+#endif
       || (AppendNameLong (interp, listObj, 
 			  "totalDataBlocks", sp->f_blocks)
 	  == TCL_ERROR)
@@ -484,6 +493,7 @@ StatfsBufToList (Tcl_Interp *interp, Tcl_Obj *listObj, struct statfs *sp)
       || (AppendNameLong (interp, listObj, 
 			  "freeFileNodes", sp->f_ffree)
 	  == TCL_ERROR)
+#ifdef MFSNAMELEN
       || (AppendNameString (interp, listObj, 
 			  "fileSystemType", fstypename)
 	  == TCL_ERROR)
@@ -492,8 +502,10 @@ StatfsBufToList (Tcl_Interp *interp, Tcl_Obj *listObj, struct statfs *sp)
 	  == TCL_ERROR)
       || (AppendNameString (interp, listObj, 
 			  "mountedFileSystem", mntfromname)
-	  == TCL_ERROR))
-	      return TCL_ERROR;
+	  == TCL_ERROR)
+#endif
+    )
+	return TCL_ERROR;
 
 #define FLAGCHECK(x, y) if (sp->f_flags & x) {if (Tcl_ListObjAppendElement (interp, flagListObj, Tcl_NewStringObj (y, -1)) != TCL_OK) return TCL_ERROR;}
 
@@ -669,6 +681,7 @@ BSD_GetfsstatObjCmd (clientData, interp, objc, objv)
     int           objc;
     Tcl_Obj      *CONST objv[];
 {
+#ifdef HAVE_GETFSSTAT
     Tcl_Obj       *resultObj = Tcl_GetObjResult (interp);
     struct statfs *statfsbufs;
     int            bufsize;
@@ -726,6 +739,10 @@ BSD_GetfsstatObjCmd (clientData, interp, objc, objv)
 
     ckfree ((void *)statfsbufs);
     return TCL_OK;
+#else // HAVE_GETFSSTAT
+    Tcl_SetObjResult (interp, Tcl_NewStringObj ("getfsstat is not available on this operating system", -1));
+    return TCL_ERROR;
+#endif// HAVE_GETFSSTAT
 }
 
 
@@ -809,7 +826,7 @@ BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
     setproctitle ("-%s", titleString);
     return TCL_OK;
 #else
-    Tcl_SetObjResult (interp, Tcl_NewStringObj ("setproctitle undefined on this architecture", -1));
+    Tcl_SetObjResult (interp, Tcl_NewStringObj ("setproctitle is not available on this operating system", -1));
     return TCL_ERROR;
 #endif
 }
