@@ -68,7 +68,7 @@ proc cputime {code {iterations 1}} {
     foreach var "userTimeUsed systemTimeUsed" {
         set val [expr {($end($var) - $start($var)) / $iterations}]
 
-        append text " / $val $var"
+        append text " / [format %.4f $val] $var"
     }
     return [string range $text 3 end]
 }
