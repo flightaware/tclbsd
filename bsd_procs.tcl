@@ -1,8 +1,6 @@
 #
 # tclbsd -- tcl procs that are part of the package
 #
-# $Id: bsd_procs.tcl,v 1.2 2007-12-21 08:23:19 karl Exp $
-#
 
 namespace eval ::bsd {
 

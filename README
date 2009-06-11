@@ -1,8 +1,6 @@
 This is BSD, a package for interfacing to various BSD UNIX system calls
 and library routines.
 
-$Id: README,v 1.2 2005-08-07 07:15:36 karl Exp $
-
 This package is a freely available open source package under the "Berkeley"
 license, same as Tcl.  You can do virtually anything you like with it, such as 
 modifying it, redistributing it, and selling it either in whole or in part.  
