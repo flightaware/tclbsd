@@ -24,18 +24,6 @@
 #include <tcl.h>
 #include "bsd.h"
 
-static int
-mysysctl(const char *name, void *oldp, size_t *oldlenp,
-    void *newp, size_t newlen)
-{
-        int error;
-
-        error = sysctlbyname(name, oldp, oldlenp, newp, newlen);
-        // if (error != 0 && errno != ENOMEM)
-                // err(1, "sysctl(%s)", name);
-        return (error);
-}
-
 /*-----------------------------------------------------------------------------
  * BSD_getcptimeObjCmd --
  *  
@@ -59,20 +47,27 @@ BSD_getcptimeObjCmd (clientData, interp, objc, objv)
     int             i;
     int             err;
     long           *times;
+    long            total;
+    long            oldTotal = 0;
+    long            newTotal = 0;
+    long            diff;
+    int             percent;
+    long            prior;
     size_t          size;
     size_t          retSize;
 
-    Tcl_Obj       **objList;
-    Tcl_Obj        *listObj;
+    Tcl_Obj        *listObj = Tcl_NewObj();
+    Tcl_Obj        *objName = NULL;
+    Tcl_Obj        *totalNameObj;
+    Tcl_Obj        *priorObj;
 
-    if (objc != 1) {
-	Tcl_WrongNumArgs (interp, 1, objv, "");
+    if (objc != 2) {
+	Tcl_WrongNumArgs (interp, 1, objv, "arrayName");
 	return TCL_ERROR;
     }
 
     retSize = size = sizeof (long) * CPUSTATES;
     times = (long *)ckalloc (size);
-    objList = (Tcl_Obj **)ckalloc (CPUSTATES * 2 * sizeof (Tcl_Obj *));
     err = sysctlbyname("kern.cp_time", times, &retSize, (void *)NULL, (size_t)0);
     // printf("%d %d %ld %ld\n", err, errno, size, retSize);
     if (err < 0) {
@@ -81,36 +76,69 @@ BSD_getcptimeObjCmd (clientData, interp, objc, objv)
     }
     assert (size == retSize);
 
-    for (i = 0; i < CPUSTATES; i++) {
-        objList[i * 2 + 1] = Tcl_NewLongObj (times[i]);
-        
-        switch (i) {
-	  case CP_USER:
-	    objList[i * 2] = Tcl_NewStringObj ("user", -1);
-	    break;
-
-	  case CP_NICE:
-	    objList[i * 2] = Tcl_NewStringObj ("nice", -1);
-	    break;
-
-	  case CP_SYS:
-	    objList[i * 2] = Tcl_NewStringObj ("sys", -1);
-	    break;
-
-	  case CP_INTR:
-	    objList[i * 2] = Tcl_NewStringObj ("intr", -1);
-	    break;
-
-	  case CP_IDLE:
-	    objList[i * 2] = Tcl_NewStringObj ("idle", -1);
-	    break;
+    totalNameObj = Tcl_NewStringObj ("total", -1);
+    priorObj = Tcl_ObjGetVar2 (interp, objv[1], totalNameObj, 0);
+    if (priorObj != NULL) {
+	if (Tcl_GetLongFromObj (interp, priorObj, &oldTotal) == TCL_ERROR) {
+	    return TCL_ERROR;
 	}
     }
 
-    listObj = Tcl_NewListObj (CPUSTATES * 2, objList);
+    for (i = 0; i < CPUSTATES; i++) {
+        newTotal += times[i];
+    }
+
+    if (Tcl_ObjSetVar2 (interp, objv[1], totalNameObj, Tcl_NewLongObj (newTotal), 0) == NULL) {
+        return TCL_ERROR;
+    }
+    total = newTotal - oldTotal;
+
+    for (i = 0; i < CPUSTATES; i++) {
+        
+        switch (i) {
+	  case CP_USER:
+	    objName = Tcl_NewStringObj ("user", -1);
+	    break;
+
+	  case CP_NICE:
+	    objName = Tcl_NewStringObj ("nice", -1);
+	    break;
+
+	  case CP_SYS:
+	    objName = Tcl_NewStringObj ("sys", -1);
+	    break;
+
+	  case CP_INTR:
+	    objName = Tcl_NewStringObj ("intr", -1);
+	    break;
+
+	  case CP_IDLE:
+	    objName = Tcl_NewStringObj ("idle", -1);
+	    break;
+	}
+
+	Tcl_IncrRefCount (objName);
+	priorObj = Tcl_ObjGetVar2 (interp, objv[1], objName, 0);
+	if (priorObj != NULL) {
+	    if (Tcl_GetLongFromObj (interp, priorObj, &prior) == TCL_ERROR) {
+	        return TCL_ERROR;
+	    }
+	    diff = times[i] - prior;
+	    percent = (int)((diff * 100.0 + 0.5) / total);
+
+	    Tcl_ListObjAppendElement (interp, listObj, objName);
+	    Tcl_ListObjAppendElement (interp, listObj, Tcl_NewIntObj (percent));
+	}
+
+	if (Tcl_ObjSetVar2 (interp, objv[1], objName, Tcl_NewLongObj (times[i]), TCL_LEAVE_ERR_MSG) == NULL) {
+	    return TCL_ERROR;
+	}
+
+	Tcl_DecrRefCount (objName);
+    }
+
     Tcl_SetObjResult (interp, listObj);
     ckfree ((char *)times);
-    ckfree ((char *)objList);
     return TCL_OK;
 }
 
