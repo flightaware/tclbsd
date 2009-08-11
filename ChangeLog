@@ -7,6 +7,8 @@
       elements as a percentage, returning those as key-value pairs and
       update the array with the latest sampled values.
 
+    * Version bump to 1.3.
+
 2009-07-28 karl
     * Update README.FreeBSD to reflect that --with-tclinclude is not needed
       and --with-mandir will put the manpage in a place where "man" will

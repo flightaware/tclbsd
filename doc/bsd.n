@@ -26,6 +26,8 @@ BSD \- Tcl interface to various BSD UNIX functions
 .br
 \fB::bsd::abort\fR
 .br
+\fB::bsd::cptime \fIarrayName\fR
+.br
 .SH DESCRIPTION
 The BSD extension provides Tcl programs with new Tcl commands to interface
 to various system calls and library routines present in BSD UNIX.
@@ -123,3 +125,23 @@ the logmask option with the \fBinfo\fR priority, both \fIinfo\fR and
 \fB::bsd::abort\fR causes abnormal program termination to occur by issuing
 an abort signal and will work unless the SIGABRT signal is being caught
 and the signal handler does not return.
+.PP
+\fB::bsd::cptime\fR takes an array name as an argument and will fill it with 
+key-value pairs representing system, user, nice, interrupt, idle, and total 
+clock  counts.  
+.PP
+Upon a second invocation with the same array as an argument, it will 
+calculate the cpu time of the various elements as a percentage over the 
+range of elapsed time since the prior call, returning the percentages as a 
+list of key-value pairs and updating the array with the latest sampled values.
+.PP
+.CS
+\fB::bsd::cptime time; after 1000; puts [::bsd::cptime time]\fR
+.CE
+.PP
+\fIuser 12 nice 0 sys 0 intr 0 idle 87\fR
+.PP
+This is a more instantaneous way to judge CPU utilization than load average,
+which is a weighted average that changes slowly over time, so the load average 
+can be 100 but the CPUs may be 95% because really the load average isn't 100, 
+it's just slowly falling back from when it was at or even far above that.

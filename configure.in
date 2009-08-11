@@ -17,7 +17,7 @@ dnl	to configure the system for the local environment.
 # so you can encode the package version directly into the source files.
 #-----------------------------------------------------------------------
 
-AC_INIT([BSD], [1.2])
+AC_INIT([BSD], [1.3])
 
 #-----------
 # Check to see if we have includes statvfs.h
