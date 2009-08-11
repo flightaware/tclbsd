@@ -112,6 +112,12 @@ Bsd_Init(Tcl_Interp *interp)
                           (ClientData) NULL,
                           (Tcl_CmdDeleteProc*) NULL);
 
+    Tcl_CreateObjCommand (interp,
+			  "bsd::cptime",
+                          BSD_getcptimeObjCmd,
+                          (ClientData) NULL,
+                          (Tcl_CmdDeleteProc*) NULL);
+
     /* Not until Tcl 8.5 */
     /* if (Tcl_Export (interp, namespace, "*", 0) == TCL_ERROR) {
 	return TCL_ERROR;

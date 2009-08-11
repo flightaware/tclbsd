@@ -1,3 +1,7 @@
+2009-08-11 karl
+    * Add new command, cptime, that uses the sysctl library call to get
+      CPU time statistics.
+
 2009-07-28 karl
     * Update README.FreeBSD to reflect that --with-tclinclude is not needed
       and --with-mandir will put the manpage in a place where "man" will

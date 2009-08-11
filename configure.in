@@ -82,7 +82,7 @@ TEA_SETUP_COMPILER
 # and PKG_TCL_SOURCES.
 #-----------------------------------------------------------------------
 
-TEA_ADD_SOURCES([bsd.c bsdgetkey.c bsdsyslog.c tclbsd.c])
+TEA_ADD_SOURCES([bsd.c bsdgetkey.c bsdsyslog.c sysctl.c tclbsd.c])
 TEA_ADD_HEADERS([])
 TEA_ADD_INCLUDES([])
 TEA_ADD_LIBS([])

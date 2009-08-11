@@ -47,3 +47,6 @@ BSD_SyslogObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *
 extern int
 BSD_AbortCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
 
+extern int
+BSD_getcptimeObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+
