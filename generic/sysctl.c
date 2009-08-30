@@ -44,6 +44,7 @@ BSD_getcptimeObjCmd (clientData, interp, objc, objv)
     int           objc;
     Tcl_Obj      *CONST objv[];
 {
+#ifdef CPUSTATES
     int             i;
     int             err;
     long           *times;
@@ -140,5 +141,9 @@ BSD_getcptimeObjCmd (clientData, interp, objc, objv)
     Tcl_SetObjResult (interp, listObj);
     ckfree ((char *)times);
     return TCL_OK;
+#else
+    Tcl_SetStringObj (Tcl_GetObjResult (interp), "cputime option is not available on this operating system", -1);
+    return TCL_ERROR;
+#endif
 }
 

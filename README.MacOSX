@@ -1,1 +1,1 @@
-./configure --prefix=/usr/local
+./configure
