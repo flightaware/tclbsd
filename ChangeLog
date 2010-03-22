@@ -1,3 +1,6 @@
+2010-03-22 karl
+    * Upgrade to Tcl Extension Architecture (TEA) 3.7.
+
 2009-08-11 karl
     * Add new command, cptime, that uses the sysctl library call to get
       CPU time statistics.  Command takes an array name as an argument
