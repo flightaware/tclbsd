@@ -73,6 +73,11 @@ TEA_PREFIX
 TEA_SETUP_COMPILER
 
 #-----------------------------------------------------------------------
+# Serial port check, needed for tclbsd.
+#-----------------------------------------------------------------------
+TEA_SERIAL_PORT
+
+#-----------------------------------------------------------------------
 # __CHANGE__
 # Specify the C source files to compile in TEA_ADD_SOURCES,
 # public headers that need to be installed in TEA_ADD_HEADERS,
@@ -89,8 +94,6 @@ TEA_ADD_LIBS([])
 TEA_ADD_CFLAGS([])
 TEA_ADD_STUB_SOURCES([])
 TEA_ADD_TCL_SOURCES([bsd_procs.tcl])
-
-TEA_SERIAL_PORT
 
 #--------------------------------------------------------------------
 # __CHANGE__

@@ -11,6 +11,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#ifndef USE_TERMIO
+#  ifndef USE_TERMIOS
+#    define USE_TERMIOS
+#  endif
+#endif
+
 #ifdef USE_TERMIO
 #include <termio.h>
 #endif
