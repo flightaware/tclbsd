@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>tclbsd</title>
+    
+    <style type="text/css">
+      body {
+        background-color: #D5D6D7;
+        padding:20px;
+        text-align: center;
+        align: center;
+      }
+      .header {
+        border-bottom: 1px solid #959596;
+        padding: 5px;
+        color: #ffffff;
+        background-color: rgb(115, 160, 197);
+      }
+      .header a {
+        text-decoration: none;
+        color: #ffffff;
+      }
+      .pageTitle {
+        font-size: 3em;
+        font-weight: normal;
+      }
+      .small { font-size: 1em; }
+
+      #outerContainer {
+        border:1px solid #959596;
+        font-family: "helvetica"; 
+        color: #000000;
+        margin: 0 auto;
+        background-color: #ffffff;
+      }
+      #container {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+        width: 700px;
+        color: #333333;
+      }
+      h1 { font-size: 3.8em; color: #736f30; margin-bottom: 3px; }
+      h1 .small { font-size: 0.4em; }
+      h1 a { text-decoration: none }
+      h2 { font-size: 1.5em; text-align: center;}
+      h3 { font-size: 1.2em; color: #111144}
+      .description {
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        margin-top: 30px;
+        font-style: italic;
+      }
+      .download { float: right; }
+      pre { background: #f4f4f4; color: #000080; padding: 15px;}
+      hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+      .footer { text-align:center; padding-top:30px; font-style: italic; }
+      .styleCredit { font-size: 75%; }
+    </style>
+    
+</head>
+
+<body>
+  <a href="http://github.com/flightaware/tclbsd"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  
+  <div id="outerContainer">
+  <div class="header">
+    <span class="pageTitle">
+      <a href="http://github.com/flightaware/tclbsd">tclbsd</a>
+    </span><br>
+    <span class="small">
+      by <a href="http://github.com/lehenbauer">lehenbauer</a> and <a href="http://flightaware.com/">flightaware</a>
+    </span>
+  </div>
+  <div id="container">
+    <div class="description">
+      Tcl bindings for Yet Another JSON Library
+    </div>
+
+    <h2>Overview</h2>
+
+	  <p>
+	  This is tclbsd, a Tcl C extension written to provide Tcl bindings
+	  to various BSD UNIX system calls and library routines.
+	  </p>
+	  <p>
+	  tclbsd provides interfaces to get the system load average 
+	  (getloadavg), get and set hard and soft resource limits (rlimit),
+	  obtain the resource usage for the current process or its children
+	  (rusage), set the process title (setproctitle), get information
+	  about mounted filesystems (statfs and getfsstat), log to the
+	  system log (syslog), abort the process (abort), and obtain system
+	  clock counts (cptime).
+	  </p>
+    <h2>Code</h2>
+    <p>
+      Get it on github: <a href="http://github.com/flightaware/tclbsd">http://github.com/flightaware/tclbsd</a>
+    </p>
+    <h2>Support</h2>
+    <p>
+        You can sometimes find tclbsd on IRC in the <code>#tcl</code> channel on the <a href="http://freenode.net">Freenode</a> network 
+        or you can file issues with github <a href="https://github.com/flightaware/tclbsd/issues">here</a>.
+    </p>
+    <h2>Download</h2>
+    <p>
+      <ul>
+	  <li><a href="https://github.com/flightaware/tclbsd/tarball/master">Latest Source as a tarball</a>
+	  <li><a href="https://github.com/flightaware/tclbsd/zipball/master">Latest Source as a tarball</a>
+	  <li><a href="https://github.com/downloads/flightaware/tclbsd/tclbsd-1.2.tar.gz">tclbsd-1.2.tar.gz</a>
+       </ul>
+    </p>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/flightaware/tclbsd</pre>
+    </p>
+    <h2>Using tclbsd</h2>
+	<pre>
+package require BSD
+    </pre>
+	Get load average.  Three elements are returned, each representing the average number of processes is the system queue averaged over one, five and fifteen minutes, respectively.
+	<pre>
+lassign [::bsd::getloadavg] load1 load5 load15
+    </pre>
+Get resource usage.  A list of key-value pairs is returned.
+	<pre>
+array set rusage [::bsd::rusage]
+parray rusage
+    </pre>
+    ...yielding...
+    <pre>
+rusage(fileSystemInputs)           = 0
+rusage(fileSystemOutputs)          = 0
+rusage(involuntaryContextSwitches) = 1
+rusage(ipcMessagesReceived)        = 0
+rusage(ipcMessagesSent)            = 0
+rusage(maxResidentSetSizeKbytes)   = 4116
+rusage(nSignalsDelivered)          = 0
+rusage(nTimesSwapped)              = 0
+rusage(pageFaults)                 = 0
+rusage(pageReclaims)               = 546
+rusage(sharedTextKbyteSeconds)     = 0.25
+rusage(stackKbyteSeconds)          = 8.0
+rusage(systemTimeUsed)             = 0.01409
+rusage(unsharedDataKbyteSeconds)   = 64.0
+rusage(userTimeUsed)               = 0.042272
+rusage(voluntaryContextSwitches)   = 89
+	</pre>
+Set process title.  Pass an argument, pretty simple.
+<pre>
+::bsd::setproctitle "this will show up in ps but usually not top"
+</pre>
+yields something like
+<pre>
+  PID  TT  STAT      TIME COMMAND
+20338   2  IWs    0:00.00 /usr/local/bin/bash
+16678   4  Is+    0:00.12 -bash (bash)
+70797   8  I+     0:00.95 vim index.html
+71288  10  S+     0:00.06 this will show up in ps but usually not top (tclsh8.5)
+71431  10  R+     0:00.00 /bin/ps
+98222  17- I     28:21.37 peekaboo
+</pre>
+statfs returns information about a mounted filesystem...
+<pre>
+array set statfs [::bsd::statfs /usr]
+parray statfs
+</pre>
+yielding
+<pre>
+statfs(availableFreeBlocks)            = 248899883
+statfs(fileSystemType)                 = ufs
+statfs(flags)                          = softUpdates filesystemStoredLocally
+statfs(freeBlocks)                     = 280057534
+statfs(freeFileNodes)                  = 96751664
+statfs(fundamentalFileSystemBlockSize) = 2048
+statfs(mountPoint)                     = /usr
+statfs(mountedFileSystem)              = /dev/mfid0s1f
+statfs(totalDataBlocks)                = 389470645
+statfs(totalFileNodes)                 = 100708350
+</pre>
+<p>
+Likewise, ::bsd::getfsstat returns a list of lists for all mounted filesystems.
+Note you can past getfsstat a -wait or -nowait argument -- check the manpage
+for details.
+</p>
+<p>
+The rlimit, syslog, abort and cptime commands are covered in the manpage.
+</p>
+    <h2>License</h2>
+
+    <pre>
+This software is copyrighted by Karl Lehenbauer and FlightAware, 
+and includes modified sample extension code copyright Scriptics 
+corporation, and other parties.  The following terms apply to all files associated with the
+software unless explicitly disclaimed in individual files.
+
+$Id: license.terms,v 1.2 2005-11-21 11:38:11 karl Exp $
+
+The author hereby grants permission to use, copy, modify, distribute,
+and license this software and its documentation for any purpose, provided
+that existing copyright notices are retained in all copies and that this
+notice is included verbatim in any distributions. No written agreement,
+license, or royalty fee is required for any of the authorized uses.
+Modifications to this software may be copyrighted by their authors
+and need not follow the licensing terms described here, provided that
+the new terms are clearly indicated on the first page of each file where
+they apply.
+
+IN NO EVENT SHALL THE AUTHORS OR DISTRIBUTORS BE LIABLE TO ANY PARTY
+FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
+ARISING OUT OF THE USE OF THIS SOFTWARE, ITS DOCUMENTATION, OR ANY
+DERIVATIVES THEREOF, EVEN IF THE AUTHORS HAVE BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+THE AUTHORS AND DISTRIBUTORS SPECIFICALLY DISCLAIM ANY WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.  THIS SOFTWARE
+IS PROVIDED ON AN "AS IS" BASIS, AND THE AUTHORS AND DISTRIBUTORS HAVE
+NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
+MODIFICATIONS.
+
+GOVERNMENT USE: If you are acquiring this software on behalf of the
+U.S. government, the Government shall have only "Restricted Rights"
+in the software and related documentation as defined in the Federal
+Acquisition Regulations (FARs) in Clause 52.227.19 (c) (2).  If you
+are acquiring the software on behalf of the Department of Defense, the
+software shall be classified as "Commercial Computer Software" and the
+Government shall have only "Restricted Rights" as defined in Clause
+252.227-7013 (c) (1) of DFARs.  Notwithstanding the foregoing, the
+authors grant the U.S. Government and others acting in its behalf
+permission to use and distribute the software in accordance with the
+terms specified in this license.
+~                                         
+</pre>
+
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/flightaware/tclbsd">http://github.com/flightaware/tclbsd</a>
+    </div>
+    
+    <div class="styleCredit footer">
+      (page style "borrowed" from
+       <a href="http://lloyd.github.com/yajl/">Lloyd Hilaiel</a>) borrowed from
+       <a href="http://kylecordes.com">Kyle Cordes</a>)
+    </div>
+    
+  </div></div>
+</body>
+
+<link type="text/css" rel="stylesheet" href="dp.SyntaxHighlighter/SyntaxHighlighter.css"></link>
+<script language="javascript" src="dp.SyntaxHighlighter/shCore.js"></script>
+<script language="javascript" src="dp.SyntaxHighlighter/shBrushCpp.js"></script>
+<script language="javascript">
+dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+</html>
+    <div class="description">
+    </div>
+
