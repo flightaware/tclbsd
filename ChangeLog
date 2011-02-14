@@ -1,3 +1,8 @@
+2011-02-14 karl
+    * "rlimit virtual" now works -- a break statement was missing.
+
+    * Silence "clang --analyze" warnings.
+
 2011-01-18 karl
     * Version bump to 1.4.  Tagged 1.4 release.
 

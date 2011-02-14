@@ -252,6 +252,8 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     Tcl_Obj      *CONST objv[];
 {
     static CONST84 char *getSetOptions[] = { "get", "set", (char *) NULL};
+    Tcl_WideInt limitVal = 0;
+
     enum GSSubOptIdx {
             GSGetIdx, GSSetIdx
     } getset;
@@ -307,6 +309,7 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     switch (limitID) {
 	case IVirtualMemoryIdx:
 	    resource = RLIMIT_AS;
+	    break;
 
         case ICoreIdx:
 	    resource = RLIMIT_CORE;
@@ -355,7 +358,6 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     }
 
     switch (getset) {
-	Tcl_WideInt limitVal;
 
 	static Tcl_Obj *unlimitedResultObj = NULL;
 
@@ -816,13 +818,13 @@ BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
 	return TCL_ERROR;
     }
 
+#ifdef HAVE_SETPROCTITLE
     if (objc == 1) {
 	titleString = NULL;
     } else {
 	titleString = Tcl_GetString (objv[1]);
     }
 
-#ifdef HAVE_SETPROCTITLE
     setproctitle ("-%s", titleString);
     return TCL_OK;
 #else
