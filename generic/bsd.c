@@ -547,6 +547,10 @@ StatfsBufToList (Tcl_Interp *interp, Tcl_Obj *listObj, struct statfs *sp)
     FLAGCHECK (MNT_SOFTDEP, "softUpdates")
 #endif
 
+#ifdef MNT_GJOURNAL
+    FLAGCHECK (MNT_GJOURNAL, "gjournal")
+#endif
+
 #ifdef MNT_NOSYMFOLLOW
     FLAGCHECK (MNT_NOSYMFOLLOW, "noFollowSymlinks")
 #endif

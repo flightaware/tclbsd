@@ -1,3 +1,7 @@
+2011-08-27 karl
+    * Add "gjournal" to flags potentially returned by statfs and getfsstat 
+      indicating that journaling with gjournal is enabled (see gjournal(8)).
+
 2011-02-14 karl
     * "rlimit virtual" now works -- a break statement was missing.
 

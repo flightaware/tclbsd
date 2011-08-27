@@ -80,7 +80,7 @@ provided, which can include \fBreadOnly\fR, \fBsynchronous\fR,
 \fBexported\fR, \fBworldExported\fR, \fBanonUidMapping\fR,
 \fBkerberosUidMapping\fR, \fBwebNFS\fR, \fBfilesystemStoredLocally\fR,
 \fBquotasEnabled\fR, \fBrootFilesystem\fR, \fBuserMounted\fR, \fBmultiLabel\fR,
-and \fBaclsEnabled\fR.
+\fBgjournal\fR and \fBaclsEnabled\fR.
 .PP
 \fB::bsd::getfsstat\fR functions like \fBstatfs\fR, except that it returns
 a list of lists with information about all mounted filesystems.  If
