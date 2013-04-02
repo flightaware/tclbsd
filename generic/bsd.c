@@ -269,13 +269,13 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     static CONST84 char *limitOptions[] = { 
             "virtual", "core", "cpu", "data", "fsize",
              "memlock", "nofile", "nproc", "rss", 
-             "sockbuf", "stack",
+             "sockbuf", "stack", "swap", "ptys",
              (char *) NULL};
 
     enum ISubOptIdx {
             IVirtualMemoryIdx, ICoreIdx, ICpuIdx, IDataIdx, IFsizeIdx,
             IMemlockIdx, INofileIdx, INprocIdx, IRssIdx,
-            ISockBufIdx, IStackIdx
+            ISockBufIdx, IStackIdx, ISwapIdx, IPtysIdx
     } limitID;
 
     Tcl_Obj        *resultObj = Tcl_GetObjResult (interp);
@@ -348,13 +348,31 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 	    resource = RLIMIT_SBSIZE;
 	    break;
 #else
-	    Tcl_SetStringObj (resultObj, "sockbuf option is not available on this operating system", -1);
+	    Tcl_SetStringObj (resultObj, "sockbuf size option is not available on this operating system", -1);
 	    return TCL_ERROR;
 #endif // RLIMIT_SBSIZE 
 
         case IStackIdx:
 	    resource = RLIMIT_STACK;
 	    break;
+
+	case ISwapIdx:
+#ifdef RLIMIT_SWAP
+	    resource = RLIMIT_SWAP;
+	    break;
+#else
+	    Tcl_SetStringObj (resultObj, "swap size option is not available on this operating system", -1);
+	    return TCL_ERROR;
+#endif // RLIMIT_SWAP 
+
+	case IPtysIdx:
+#ifdef RLIMIT_NPTS
+	    resource = RLIMIT_NPTS;
+	    break;
+#else
+	    Tcl_SetStringObj (resultObj, "maximum pseudoterminals option is not available on this operating system", -1);
+	    return TCL_ERROR;
+#endif // RLIMIT_NPTS 
     }
 
     switch (getset) {
