@@ -28,6 +28,8 @@ BSD \- Tcl interface to various BSD UNIX functions
 .br
 \fB::bsd::cptime \fIarrayName\fR
 .br
+\fB::bsd::getkey \fI?timeout?\fR
+.br
 .SH DESCRIPTION
 The BSD extension provides Tcl programs with new Tcl commands to interface
 to various system calls and library routines present in BSD UNIX.
@@ -145,3 +147,14 @@ This is a more instantaneous way to judge CPU utilization than load average,
 which is a weighted average that changes slowly over time, so the load average 
 can be 100 but the CPUs may be 95% because really the load average isn't 100, 
 it's just slowly falling back from when it was at or even far above that.
+.PP
+\fB::bsd::getkey\fR reads a single key from the user's terminal and returns
+it as an integer value.  For example, invoking the function and then pressing
+\fBa\fR on the terminal returns \fB97\fR.
+.PP
+The
+\fItimeout\fR value, if specified, is the number of seconds to wait for
+a key to be pressed.  It has accuracy to about a tenth of a second and must be
+a value between 0.0 and 25.5.  If no key is pressed within the timeout interval,
+an empty string is returned.  If the timeout is not specified, getkey will
+wait for an unlimited amount of time for a key to be pressed.
