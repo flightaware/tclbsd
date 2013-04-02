@@ -8,13 +8,10 @@
  *
  * Permission to use, copy, modify, and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
- * that the above copyright notice appear in all copies.  NeoSoft makes
+ * that the above copyright notice appear in all copies.  Superconnect makes
  * no representations about the suitability of this software for any purpose.
  * It is provided "as is" without express or implied warranty.
  *
- *-----------------------------------------------------------------------------
- * $Id: bsdsyslog.c,v 1.5 2007-06-13 06:22:37 karl Exp $
- *-----------------------------------------------------------------------------
  */
 
 #include <tcl.h>

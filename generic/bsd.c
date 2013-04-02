@@ -4,17 +4,14 @@
  *
  *      Contains the Superconnect BSD extensions for Tcl.
  *-----------------------------------------------------------------------------
- * Copyright 1998 NeoSoft, 2005 Superconnect.
- *
+ * Copyright 1998 NeoSoft, 2005 Superconnect, 2013 FlightAware LLC
+ * 
  * Permission to use, copy, modify, and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
  * that the above copyright notice appear in all copies.  NeoSoft makes
  * no representations about the suitability of this software for any purpose.
  * It is provided "as is" without express or implied warranty.
  *
- *-----------------------------------------------------------------------------
- * $Id: bsd.c,v 1.13 2008-06-23 16:07:33 karl Exp $
- *-----------------------------------------------------------------------------
  */
 
 #include <sys/types.h>

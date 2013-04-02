@@ -1,9 +1,6 @@
 /*
  * tclbsd.c --
  *
- * $Id: tclbsd.c,v 1.7 2008-05-15 19:36:35 karl Exp $
- *
- *
  */
 
 #include <tcl.h>
@@ -33,18 +30,13 @@
 EXTERN int
 Bsd_Init(Tcl_Interp *interp)
 {
-    /* not until Tcl 8.5 */
-    /* Tcl_Namespace *namespace; */
+    Tcl_Namespace *namespace;
 
-    /*
-     * This may work with 8.0, but we are using strictly stubs here,
-     * which requires 8.1.
-     */
-    if (Tcl_InitStubs(interp, "8.1", 0) == NULL) {
+    if (Tcl_InitStubs(interp, "8.5", 0) == NULL) {
 	return TCL_ERROR;
     }
 
-    if (Tcl_PkgRequire(interp, "Tcl", "8.1", 0) == NULL) {
+    if (Tcl_PkgRequire(interp, "Tcl", "8.5", 0) == NULL) {
 	return TCL_ERROR;
     }
 
@@ -52,11 +44,7 @@ Bsd_Init(Tcl_Interp *interp)
 	return TCL_ERROR;
     }
 
-    /* Not until Tcl 8.5 */
-    /* namespace = Tcl_CreateNamespace (interp, "bsd", (ClientData)NULL, (Tcl_NamespaceDeleteProc *)NULL); */
-    if (Tcl_Eval (interp, "namespace eval bsd {}") == TCL_ERROR) {
-	return TCL_ERROR;
-    }
+     namespace = Tcl_CreateNamespace (interp, "bsd", (ClientData)NULL, (Tcl_NamespaceDeleteProc *)NULL);
 
     Tcl_CreateObjCommand (interp,
 			  "bsd::rusage",
@@ -118,14 +106,9 @@ Bsd_Init(Tcl_Interp *interp)
                           (ClientData) NULL,
                           (Tcl_CmdDeleteProc*) NULL);
 
-    /* Not until Tcl 8.5 */
-    /* if (Tcl_Export (interp, namespace, "*", 0) == TCL_ERROR) {
-	return TCL_ERROR;
-    } */
-    if (Tcl_Eval (interp, "namespace eval bsd {namespace export *}") == TCL_ERROR) {
-	return TCL_ERROR;
+    if (Tcl_Export (interp, namespace, "*", 0) == TCL_ERROR) {
+        return TCL_ERROR;
     }
-
 
     return TCL_OK;
 }

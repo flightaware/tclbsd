@@ -4,12 +4,14 @@
  *
  *      Contains the BSD extensions for Tcl.
  *-----------------------------------------------------------------------------
- * Copyright 2009 Karl Lehenbauer
+ * Copyright 2009 - 2013 Karl Lehenbauer
  *
  * Permission to use, copy, modify, and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
- * that the above copyright notice appear in all copies.  NeoSoft makes
- * no representations about the suitability of this software for any purpose.
+ * that the above copyright notice appear in all copies.  Karl Lehenbauer et al
+ * makes no representations about the suitability of this software for any 
+ * purpose.
+ *
  * It is provided "as is" without express or implied warranty.
  *
  *-----------------------------------------------------------------------------

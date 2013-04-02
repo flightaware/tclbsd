@@ -6,18 +6,16 @@
  *-----------------------------------------------------------------------------
  * Copyright 1998 NeoSoft.
  * Copyright 2005 Superconnect, Ltd.
+ * Copyright 2013 FlightAware LLC
  *
  * Permission to use, copy, modify, and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
- * that the above copyright notice appear in all copies.  NeoSoft and
- * Superconnect make no representations about the suitability of this 
- * software for any purpose.
+ * that the above copyright notice appear in all copies.  NeoSoft,
+ * Superconnect, FlightAware and Karl Lehenbauer make no representations 
+ * about the suitability of this software for any purpose.
  *
  * It is provided "as is" without express or implied warranty.
  *
- *-----------------------------------------------------------------------------
- * $Id: bsd.h,v 1.6 2008-05-15 19:36:35 karl Exp $
- *-----------------------------------------------------------------------------
  */
 
 extern int
