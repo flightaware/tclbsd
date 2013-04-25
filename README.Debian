@@ -1,0 +1,2 @@
+# apt-get install tcl8.5-dev
+./configure --with-tcl=/usr/lib/tcl8.5
