@@ -45,7 +45,7 @@ GetSyslogFacility (Tcl_Interp *interp, char *facilityName, int flags)
     }
 
     if (flags & TCLBSD_LOG_ERROR) {
-       Tcl_AppendResult (interp, "bad value for facility: must be one of", NULL);
+       Tcl_AppendResult (interp, "bad value for facility ('", facilityName, "'): must be one of", NULL);
 
        for (codePtr = facilitynames; codePtr->c_name != NULL; codePtr++) {
            Tcl_AppendResult (interp, " '", codePtr->c_name, "'", NULL);
@@ -80,7 +80,7 @@ GetSyslogPriority (Tcl_Interp *interp, char *priorityName, int flags)
     }
 
     if (flags & TCLBSD_LOG_ERROR) {
-       Tcl_AppendResult (interp, "bad value for priority: must be one of", NULL);
+       Tcl_AppendResult (interp, "bad value for priority ('", priorityName, "'): must be one of", NULL);
 
        for (codePtr = prioritynames; codePtr->c_name != NULL; codePtr++) {
            Tcl_AppendResult (interp, " '", codePtr->c_name, "'", NULL);
