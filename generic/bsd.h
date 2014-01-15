@@ -48,3 +48,6 @@ BSD_AbortCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONS
 extern int
 BSD_getcptimeObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
 
+extern int
+BSD_UptimeObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+

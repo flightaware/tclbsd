@@ -877,3 +877,38 @@ BSD_AbortCmd (clientData, interp, objc, objv)
 
     return TCL_OK;
 }
+
+/*-----------------------------------------------------------------------------
+ * BSD_UptimeCmd --
+ *  
+ * Implements the `uptime' command:
+ *    uptime
+ *  
+ * Results:
+ *      Sets the result object to a double-precision uptime
+ *
+ * Side effects:
+ *      See the user documentation.
+ *-----------------------------------------------------------------------------
+ */     
+int
+BSD_UptimeObjCmd (clientData, interp, objc, objv)
+    ClientData    clientData;
+    Tcl_Interp   *interp;
+    int           objc;
+    Tcl_Obj      *CONST objv[];
+{
+    // struct timeval t;
+    struct timespec t;
+    double time;
+
+    // microuptime(&t);
+    clock_gettime(CLOCK_MONOTONIC, &t);
+
+    time = t.tv_sec + (double)(t.tv_nsec) / 1000000000.0;
+
+    Tcl_SetObjResult (interp, Tcl_NewDoubleObj (time));
+    return TCL_OK;
+}
+
+

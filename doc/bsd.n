@@ -30,6 +30,8 @@ BSD \- Tcl interface to various BSD UNIX functions
 .br
 \fB::bsd::getkey \fI?timeout?\fR
 .br
+\fB::bsd::uptime\fR
+.br
 .SH DESCRIPTION
 The BSD extension provides Tcl programs with new Tcl commands to interface
 to various system calls and library routines present in BSD UNIX.
@@ -170,3 +172,5 @@ a key to be pressed.  It has accuracy to about a tenth of a second and must be
 a value between 0.0 and 25.5.  If no key is pressed within the timeout interval,
 an empty string is returned.  If the timeout is not specified, getkey will
 wait for an unlimited amount of time for a key to be pressed.
+.PP
+\fB::bsd::uptime\fR returns the number of CPU seconds that the system has been up, as a double-precision floating point number.

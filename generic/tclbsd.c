@@ -106,6 +106,12 @@ Bsd_Init(Tcl_Interp *interp)
                           (ClientData) NULL,
                           (Tcl_CmdDeleteProc*) NULL);
 
+    Tcl_CreateObjCommand (interp,
+			  "bsd::uptime",
+                          BSD_UptimeObjCmd,
+                          (ClientData) NULL,
+                          (Tcl_CmdDeleteProc*) NULL);
+
     if (Tcl_Export (interp, namespace, "*", 0) == TCL_ERROR) {
         return TCL_ERROR;
     }
