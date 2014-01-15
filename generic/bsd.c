@@ -16,6 +16,7 @@
 
 #include <sys/types.h>
 #include <unistd.h>
+#include <time.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 
@@ -898,6 +899,7 @@ BSD_UptimeObjCmd (clientData, interp, objc, objv)
     int           objc;
     Tcl_Obj      *CONST objv[];
 {
+#ifdef HAVE_CLOCK_GETTIME
     // struct timeval t;
     struct timespec t;
     double time;
@@ -909,6 +911,10 @@ BSD_UptimeObjCmd (clientData, interp, objc, objv)
 
     Tcl_SetObjResult (interp, Tcl_NewDoubleObj (time));
     return TCL_OK;
+#else
+    Tcl_SetObjResult (interp, Tcl_NewStringObj ("uptime is not available on this operating system", -1));
+    return TCL_ERROR;
+#endif
 }
 
 

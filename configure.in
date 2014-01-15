@@ -28,7 +28,7 @@ AC_CHECK_HEADERS(sys/vfs.h)
 #-----------
 # Check to see if we have functions setproctitle, statfs, statvfs
 #-----------
-AC_CHECK_FUNCS(setproctitle statfs statvfs getfsstat)
+AC_CHECK_FUNCS(setproctitle statfs statvfs getfsstat clock_gettime)
 
 AC_CHECK_MEMBERS(struct statfs.f_iosize)
 
