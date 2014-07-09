@@ -36,7 +36,7 @@
 static int
 GetSyslogFacility (Tcl_Interp *interp, char *facilityName, int flags)
 {
-    CODE *codePtr;
+    const CODE *codePtr;
 
     for (codePtr = facilitynames; codePtr->c_name != NULL; codePtr++) {
         if (strcmp (facilityName, codePtr->c_name) == 0) {
@@ -71,7 +71,7 @@ GetSyslogFacility (Tcl_Interp *interp, char *facilityName, int flags)
 static int
 GetSyslogPriority (Tcl_Interp *interp, char *priorityName, int flags)
 {
-    CODE *codePtr;
+    const CODE *codePtr;
 
     for (codePtr = prioritynames; codePtr->c_name != NULL; codePtr++) {
         if (strcmp (priorityName, codePtr->c_name) == 0) {
