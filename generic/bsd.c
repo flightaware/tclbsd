@@ -831,7 +831,9 @@ BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
     int           objc;
     Tcl_Obj      *CONST objv[];
 {
+#ifdef HAVE_SETPROCTITLE
     char *titleString;
+#endif
 
     if (objc > 2) {
 	Tcl_WrongNumArgs (interp, 1, objv, "[string]");
