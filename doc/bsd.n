@@ -181,4 +181,4 @@ wait for an unlimited amount of time for a key to be pressed.
 .PP
 \fB::bsd::set_panic_proc\fR sets the Tcl panic proc, a C function that is invoked in the event that the Tcl interpreter encounters a crash condition and invokes Tcl_Panic, to one provided by tclbsd.  The tclbsd version logs the panic message to the system log via the syslog() system call as well are writing it to stderr.  (The default version only writes it to stderr).
 .PP
-\fB::bsd::panic message\fR invokes Tcl's \fBTcl_Panic\fR function with the specified message as its argument.
+\fB::bsd::panic \fImessage\fR invokes Tcl's \fBTcl_Panic\fR function with the specified message as its argument.
