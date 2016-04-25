@@ -943,7 +943,7 @@ BSD_PanicVA(
     char *string;
     asprintf (&string, "Tcl panic! %s", format);
 
-    syslog (LOG_ERR, string, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+    syslog (LOG_WARNING, string, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 
     fprintf(stderr, string, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
     fprintf(stderr, "\n");
