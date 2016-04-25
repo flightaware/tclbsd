@@ -14,23 +14,7 @@
  *
  */
 
-#include <sys/types.h>
-#include <unistd.h>
-#include <time.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-
-#include <sys/param.h>
-#include <sys/mount.h>
-
-#ifdef HAVE_SYS_VFS_H
-#  include <sys/vfs.h>
-#endif
-
-#include <stdlib.h>
-#include <string.h>
-
-#include <tcl.h>
+#include "bsd.h"
 
 static int
 AppendNameLong (interp, listObj, name, element)
@@ -920,3 +904,139 @@ BSD_UptimeObjCmd (clientData, interp, objc, objv)
 }
 
 
+
+/*
+ *----------------------------------------------------------------------
+ *
+ * BSD_PanicVA --
+ *
+ *	Print an error message and kill the process.
+ *
+ * Results:
+ *	None.
+ *
+ * Side effects:
+ *	The process dies, entering the debugger if possible.
+ *
+ *----------------------------------------------------------------------
+ */
+
+void
+BSD_PanicVA(
+    const char *format,		/* Format string, suitable for passing to
+				 * fprintf. */
+    va_list argList)		/* Variable argument list. */
+{
+    char *arg1, *arg2, *arg3;	/* Additional arguments (variable in number)
+				 * to pass to fprintf. */
+    char *arg4, *arg5, *arg6, *arg7, *arg8;
+
+    arg1 = va_arg(argList, char *);
+    arg2 = va_arg(argList, char *);
+    arg3 = va_arg(argList, char *);
+    arg4 = va_arg(argList, char *);
+    arg5 = va_arg(argList, char *);
+    arg6 = va_arg(argList, char *);
+    arg7 = va_arg(argList, char *);
+    arg8 = va_arg(argList, char *);
+
+    char *string;
+    asprintf (&string, "Tcl panic! %s", format);
+
+    syslog (LOG_ERR, string, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+
+    fprintf(stderr, string, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+    fprintf(stderr, "\n");
+    fflush(stderr);
+
+    abort();
+}
+
+/*-----------------------------------------------------------------------------
+ * BSD_PanicProc --
+ *  
+ * Implements a Tcl panic proc that will syslog the panic as well as
+ *   write it to stderr
+ *  
+ * Results:
+ *      Syslogs the panic message 
+ *      Writes the panic message to stderr
+ *      Aborts the program
+ *
+ * Side effects:
+ *      Aborts the program
+ *-----------------------------------------------------------------------------
+ */     
+
+/* ARGSUSED */
+
+/* coverity[+kill] */
+void
+BSD_PanicProc(
+    const char *format,
+    ...)
+{
+    va_list argList;
+
+    va_start(argList, format);
+    BSD_PanicVA(format, argList);
+    va_end (argList);
+}
+
+/*-----------------------------------------------------------------------------
+ * BSD_SetPanicProcCmd --
+ *  
+ * Implements the `set_panic_proc' command:
+ *    set_panic_proc
+ *  
+ * Results:
+ *      Returns TCL_OK
+ *
+ * Side effects:
+ *      Sets the Tcl panic proc to BSD_PanicProc
+ *-----------------------------------------------------------------------------
+ */     
+int
+BSD_SetPanicProcObjCmd (clientData, interp, objc, objv)
+    ClientData    clientData;
+    Tcl_Interp   *interp;
+    int           objc;
+    Tcl_Obj      *CONST objv[];
+{
+    Tcl_SetPanicProc (BSD_PanicProc);
+    return TCL_OK;
+}
+
+/*-----------------------------------------------------------------------------
+ * BSD_PanicObjCmd --
+ *  
+ * Implements the `panic' command:
+ *    panic "message"
+ *  
+ * Results:
+ *      Panics Tcl.  (See Tcl_Panic)
+ *
+ * Side effects:
+ *      None other than aborting the program.
+ *-----------------------------------------------------------------------------
+ */     
+int
+BSD_PanicObjCmd (clientData, interp, objc, objv)
+    ClientData    clientData;
+    Tcl_Interp   *interp;
+    int           objc;
+    Tcl_Obj      *CONST objv[];
+{
+    if (objc != 2) {
+	Tcl_WrongNumArgs (interp, 0, objv, "message");
+	return TCL_ERROR;
+    }
+
+    Tcl_Panic ("%s", Tcl_GetString (objv[1]));
+
+    // we have to return int even though we don't really return
+    return TCL_OK;
+}
+
+//
+// vim: set ts=8 sw=4 sts=4 noet :

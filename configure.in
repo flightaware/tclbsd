@@ -18,7 +18,7 @@ dnl	to configure the system for the local environment.
 # so that we create the export library with the dll.
 #-----------------------------------------------------------------------
 
-AC_INIT([BSD], [1.6])
+AC_INIT([BSD], [1.7])
 
 #-----------
 # Check to see if we have includes sys/vfs.h

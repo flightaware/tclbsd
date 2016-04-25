@@ -112,6 +112,18 @@ Bsd_Init(Tcl_Interp *interp)
                           (ClientData) NULL,
                           (Tcl_CmdDeleteProc*) NULL);
 
+    Tcl_CreateObjCommand (interp,
+			  "bsd::set_panic_proc",
+                          BSD_SetPanicProcObjCmd,
+                          (ClientData) NULL,
+                          (Tcl_CmdDeleteProc*) NULL);
+
+    Tcl_CreateObjCommand (interp,
+			  "bsd::panic",
+                          BSD_PanicObjCmd,
+                          (ClientData) NULL,
+                          (Tcl_CmdDeleteProc*) NULL);
+
     if (Tcl_Export (interp, namespace, "*", 0) == TCL_ERROR) {
         return TCL_ERROR;
     }
@@ -142,3 +154,4 @@ Bsd_SafeInit(Tcl_Interp *interp)
     return TCL_OK;
 }
 
+// vim: set ts=8 sw=4 sts=4 noet :

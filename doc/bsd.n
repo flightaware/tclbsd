@@ -32,6 +32,10 @@ BSD \- Tcl interface to various BSD UNIX functions
 .br
 \fB::bsd::uptime\fR
 .br
+\fB::bsd::set_panic_proc\fR
+.br
+\fB::bsd::panic\fR
+.br
 .SH DESCRIPTION
 The BSD extension provides Tcl programs with new Tcl commands to interface
 to various system calls and library routines present in BSD UNIX.
@@ -174,3 +178,7 @@ an empty string is returned.  If the timeout is not specified, getkey will
 wait for an unlimited amount of time for a key to be pressed.
 .PP
 \fB::bsd::uptime\fR returns the number of CPU seconds that the system has been up, as a double-precision floating point number.
+.PP
+\fB::bsd::set_panic_proc\fR sets the Tcl panic proc, a C function that is invoked in the event that the Tcl interpreter encounters a crash condition and invokes Tcl_Panic, to one provided by tclbsd.  The tclbsd version logs the panic message to the system log via the syslog() system call as well are writing it to stderr.  (The default version only writes it to stderr).
+.PP
+\fB::bsd::panic message\fR invokes Tcl's \fBTcl_Panic\fR function with the specified message as its argument.

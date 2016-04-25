@@ -18,6 +18,27 @@
  *
  */
 
+#include <tcl.h>
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <time.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+
+#include <sys/param.h>
+#include <sys/mount.h>
+
+#ifdef HAVE_SYS_VFS_H
+#  include <sys/vfs.h>
+#endif
+
+#include <stdlib.h>
+#include <string.h>
+
+#include <syslog.h>
+#include <stdarg.h>
+
 extern int
 BSD_RusageObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
 
@@ -51,3 +72,11 @@ BSD_getcptimeObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Ob
 extern int
 BSD_UptimeObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
 
+extern int
+BSD_SetPanicProcObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+
+extern int
+BSD_PanicObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+extern int
+BSD_SetPanicProcObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+// vim: set ts=8 sw=4 sts=4 noet :
