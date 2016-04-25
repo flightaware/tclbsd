@@ -39,6 +39,9 @@
 #include <syslog.h>
 #include <stdarg.h>
 
+extern void
+BSD_PanicProc(const char *format, ...);
+
 extern int
 BSD_RusageObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
 

@@ -128,6 +128,8 @@ Bsd_Init(Tcl_Interp *interp)
         return TCL_ERROR;
     }
 
+    Tcl_SetPanicProc (BSD_PanicProc);
+
     return TCL_OK;
 }
 
