@@ -137,7 +137,7 @@ Priority can be one of
 Check your documentation on your syslog library, high priority messages
 do stuff besides logging, like blasting to all logged in users, while
 \fB::bsd::syslog close\fR closes the connection to the system log.
-Finally, .fB::bsd::syslog logmask\fR sets the log priority mask and masks all priorities
+Finally, \fB::bsd::syslog logmask\fR sets the log priority mask and masks all priorities
 up to and including the specified one.  For instance, if you invoked
 the logmask option with the \fBinfo\fR priority, both \fIinfo\fR and
 \fIdebug\fR log messages would be suppressed.
