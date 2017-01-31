@@ -832,11 +832,8 @@ BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
     }
 
     setproctitle ("-%s", titleString);
-    return TCL_OK;
-#else
-    Tcl_SetObjResult (interp, Tcl_NewStringObj ("setproctitle is not available on this operating system", -1));
-    return TCL_ERROR;
 #endif
+    return TCL_OK;
 }
 
 /*-----------------------------------------------------------------------------
