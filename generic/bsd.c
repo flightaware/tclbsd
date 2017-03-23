@@ -431,6 +431,9 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 
 		case SHHardIdx:
 		    rlimit.rlim_max = limitVal;
+                    if (rlimit.rlim_cur > rlimit.rlim_max) {
+			rlimit.rlim_cur = rlimit.rlim_max;
+                    }
 		    break;
 
 		case SHBothIdx:
