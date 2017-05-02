@@ -15,6 +15,12 @@
  */
 
 #include "bsd.h"
+#ifdef HAVE_SETPROCTITLE_INIT
+#include "bsd/unistd.h"
+#ifdef TCL_THREADS
+#include <pthread.h>
+#endif
+#endif
 
 static int
 AppendNameLong (interp, listObj, name, element)
@@ -797,6 +803,59 @@ BSD_GetLoadAvgObjCmd (clientData, interp, objc, objv)
     return TCL_OK;
 }
 
+#ifdef HAVE_SETPROCTITLE_INIT
+
+static int BSD_setproctitle_state = 0;
+#ifdef TCL_THREADS
+static pthread_mutex_t BSD_setproctitle_mutex = PTHREAD_MUTEX_INITIALIZER;
+#endif
+
+/*-----------------------------------------------------------------------------
+ * BSD_SetProcTitleObjCmd_init()
+ *
+ * For non-BSD systems libbsd requires setproctitle_init() to setup the SPA
+ * points for the argv values ps will read.  This routine finds the argv address
+ * can calls setproctitle_init() once.
+ *-----------------------------------------------------------------------------
+ */
+static void
+BSD_SetProcTitleObjCmd_init()
+{
+    if (BSD_setproctitle_state) {
+	return;
+    }
+
+    int argc = 0;
+    char **argv = NULL;
+
+#ifdef __linux__
+    /*
+     * For Linux to find the argc, argv and environ pointers we use the POSIX environ pointer.
+     * Walk the environ pointer back until we find a small number, thats a reasonable value for argc.
+     */
+    extern char **environ;
+    int off = 2;
+    argc = *(int *)(environ - off);
+    while (argc <= 0 || argc > 2048) {
+	++off;
+	argc = *(int *)(environ - off);
+    }
+    argv = (char **)(environ - off + 1);
+#else
+#error "Finding argc, argv and environ pointers are OS specific"
+#endif
+
+#ifdef TCL_THREADS
+    pthread_mutex_lock(&BSD_setproctitle_mutex);
+#endif
+    setproctitle_init(argc, argv, environ);
+    BSD_setproctitle_state = 1;
+#ifdef TCL_THREADS
+    pthread_mutex_unlock(&BSD_setproctitle_mutex);
+#endif
+}
+
+#endif /* HAVE_SETPROCTITLE_INIT */
 
 /*-----------------------------------------------------------------------------
  * BSD_SetProcTitleObjCmd --
@@ -833,6 +892,10 @@ BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
     } else {
 	titleString = Tcl_GetString (objv[1]);
     }
+
+#ifdef HAVE_SETPROCTITLE_INIT
+    BSD_SetProcTitleObjCmd_init();
+#endif
 
     setproctitle ("-%s", titleString);
 #endif
