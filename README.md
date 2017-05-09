@@ -25,7 +25,8 @@ package require BSD
 
 `::bsd::uptime` returns the number of CPU seconds that the system has been up, as a floating point number.
 
-`::bsd::setproctitle` sets the process title that appears on the *ps* command.
+`::bsd::setproctitle` sets the process title that appears on the *ps* command.  On Linux this requires a 
+call to setproctitle_init.  The tcllauncher wrapper makes this call on Linux.
 
 `::bsd::statfs` and `::bsd::getfsstat` returns a considerable amount of information about mounted filesystems including the underlying filesystem block size, the optimal transfer block size, the total number of data blocks and free blocks, inodes and free inodes, the filesystem type, mount point and name, and a number of attributes such as that it is read only, synchronous, restricts executable, SUID, symlinks, whether or not the time of last access is updated upon an access, whether cluster reads and writes are supported, and more.  They are Tcl-level interfaces to the BSD `statfs` and `getfsstat` system calls.
 
