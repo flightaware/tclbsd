@@ -58,6 +58,7 @@ Building under most UNIX systems is easy, just run the configure script
 and then run make. 
 
 	$ cd tclbsd
+	$ autoreconf
 	$ ./configure
 	$ make
 	$ make install
