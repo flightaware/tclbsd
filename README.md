@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/flightaware/tclbsd.svg?branch=master)](https://travis-ci.org/flightaware/tclbsd)
+
 # tclbsd, a package for interfacing to various BSD UNIX system calls and library routines (and works pretty well with Linux, too)
 
 **tclbsd** provides a way for Tcl programs to exercise many interesting and useful system calls and library routines available to C programs on versions of BSD UNIX such as FreeBSD.  Many of the interfaces also work with Linux and other non-BSD UNIX variants as well.
