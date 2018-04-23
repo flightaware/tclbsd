@@ -144,8 +144,11 @@ BSD_getcptimeObjCmd (clientData, interp, objc, objv)
     ckfree ((char *)times);
     return TCL_OK;
 #else
-    Tcl_SetStringObj (Tcl_GetObjResult (interp), "cputime option is not available on this operating system", -1);
-    return TCL_ERROR;
+    if (objc != 2) {
+	Tcl_WrongNumArgs (interp, 1, objv, "arrayName");
+	return TCL_ERROR;
+    }
+    return Tcl_VarEval (interp, "::bsd::linux_cptime ", Tcl_GetString (objv[1]), NULL);
 #endif
 }
 
