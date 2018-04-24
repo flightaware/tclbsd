@@ -1,1 +1,2 @@
+autoreconf
 ./configure --with-tcl=/usr/local/lib/tcl8.6 --mandir=/usr/local/man
