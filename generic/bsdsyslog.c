@@ -1,5 +1,5 @@
 
-/* 
+/*
  * bsdsyslog.c --
  *
  *      Contains the Superconnect BSD syslog extensions for Tcl.
@@ -25,14 +25,14 @@
 
 /*-----------------------------------------------------------------------------
  * GetSyslogFacility --
- *  
- *  
+ *
+ *
  * Results:
- *      
+ *
  * Side effects:
  *      See the user documentation.
  *-----------------------------------------------------------------------------
- */     
+ */
 static int
 GetSyslogFacility (Tcl_Interp *interp, char *facilityName, int flags)
 {
@@ -60,14 +60,14 @@ GetSyslogFacility (Tcl_Interp *interp, char *facilityName, int flags)
 
 /*-----------------------------------------------------------------------------
  * GetSyslogPriority --
- *  
- *  
+ *
+ *
  * Results:
- *      
+ *
  * Side effects:
  *      See the user documentation.
  *-----------------------------------------------------------------------------
- */     
+ */
 static int
 GetSyslogPriority (Tcl_Interp *interp, char *priorityName, int flags)
 {
@@ -91,30 +91,30 @@ GetSyslogPriority (Tcl_Interp *interp, char *priorityName, int flags)
 
 /*-----------------------------------------------------------------------------
  * BSD_SyslogObjCmd --
- *  
+ *
  * Implements the `syslog' command:
  *    syslog open
  *    syslog close
  *    syslog logmask
  *    syslog log
- *  
+ *
  * Results:
  *      A standard Tcl result.
- *      
+ *
  * Side effects:
  *      See the user documentation.
  *-----------------------------------------------------------------------------
- */     
+ */
 int
 BSD_SyslogObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
     int optIndex;
 
-    static CONST84 char *options[] = { 
+    static const char *options[] = {
         "log", "open", "close", "logmask", (char *) NULL
     };
 
@@ -159,7 +159,7 @@ BSD_SyslogObjCmd (clientData, interp, objc, objv)
 	int        i;
 	Tcl_Obj  **logoptObjv;
 
-	static CONST char *logopts[] = {
+	static const char *logopts[] = {
 	    "console", "no_delay", "perror", "pid", (char *)NULL
 	};
 

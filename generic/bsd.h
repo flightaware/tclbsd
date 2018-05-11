@@ -43,43 +43,43 @@ extern void
 BSD_PanicProc(const char *format, ...);
 
 extern int
-BSD_RusageObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_RusageObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_RlimitObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_RlimitObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_StatfsObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_StatfsObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_GetfsstatObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_GetfsstatObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_GetLoadAvgObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_GetLoadAvgObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_SetProcTitleObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_SetProcTitleObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_GetKeyObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_GetKeyObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_SyslogObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_SyslogObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_AbortCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_AbortCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_getcptimeObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_getcptimeObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_UptimeObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_UptimeObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_SetPanicProcObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_SetPanicProcObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 extern int
-BSD_PanicObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_PanicObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 extern int
-BSD_SetPanicProcObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[]);
+BSD_SetPanicProcObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 // vim: set ts=8 sw=4 sts=4 noet :

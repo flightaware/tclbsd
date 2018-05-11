@@ -125,7 +125,7 @@ BSD_RusageObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
     char         *subOption = NULL;
     Tcl_Obj      *resultObj = Tcl_GetObjResult (interp);
@@ -234,16 +234,16 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
-    static CONST84 char *getSetOptions[] = { "get", "set", (char *) NULL};
+    static const char *getSetOptions[] = { "get", "set", (char *) NULL};
     Tcl_WideInt limitVal = 0;
 
     enum GSSubOptIdx {
             GSGetIdx, GSSetIdx
     } getset;
 
-    static CONST84 char *softHardOptions[] = { 
+    static const char *softHardOptions[] = {
              "soft", "hard", "both",
              (char *) NULL};
 
@@ -251,7 +251,7 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
             SHSoftIdx, SHHardIdx, SHBothIdx
     } hardsoft;
 
-    static CONST84 char *limitOptions[] = { 
+    static const char *limitOptions[] = {
             "virtual", "core", "cpu", "data", "fsize",
              "memlock", "nofile", "nproc", "rss", 
              "sockbuf", "stack", "swap", "ptys",
@@ -652,7 +652,7 @@ BSD_StatfsObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
     char         *path;
     Tcl_Obj      *resultObj = Tcl_GetObjResult (interp);
@@ -691,7 +691,7 @@ BSD_GetfsstatObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
 #ifdef HAVE_GETFSSTAT
     Tcl_Obj       *resultObj = Tcl_GetObjResult (interp);
@@ -776,7 +776,7 @@ BSD_GetLoadAvgObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
 #define LOADAVG_NELEM 3
 
@@ -822,7 +822,7 @@ BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
 #ifdef HAVE_SETPROCTITLE
     char *titleString;
@@ -863,7 +863,7 @@ BSD_AbortCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
 
     abort();
@@ -889,7 +889,7 @@ BSD_UptimeObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
 #ifdef HAVE_CLOCK_GETTIME
     // struct timeval t;
@@ -1007,7 +1007,7 @@ BSD_SetPanicProcObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
     Tcl_SetPanicProc (BSD_PanicProc);
     return TCL_OK;
@@ -1031,7 +1031,7 @@ BSD_PanicObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
     if (objc != 2) {
 	Tcl_WrongNumArgs (interp, 0, objv, "message");

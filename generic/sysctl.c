@@ -44,7 +44,7 @@ BSD_getcptimeObjCmd (clientData, interp, objc, objv)
     ClientData    clientData;
     Tcl_Interp   *interp;
     int           objc;
-    Tcl_Obj      *CONST objv[];
+    Tcl_Obj      *const objv[];
 {
 #ifdef CPUSTATES
     int             i;
