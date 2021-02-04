@@ -25,6 +25,11 @@ AC_INIT([BSD], [1.9.0])
 #-----------
 AC_CHECK_HEADERS(sys/vfs.h)
 
+#-----------
+# Check to see if we have sysctl.h
+#-----------
+AC_CHECK_HEADERS(sys/sysctl.h)
+
 
 #-----------
 # Check to see if we have functions setproctitle, statfs, statvfs

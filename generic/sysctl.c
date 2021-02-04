@@ -19,7 +19,9 @@
 
 #include <sys/param.h>
 #include <sys/resource.h>
+#ifdef HAVE_SYS_SYSCTL_H
 #include <sys/sysctl.h>
+#endif
 #include <errno.h>
 #include <assert.h>
 
