@@ -1,0 +1,30 @@
+# This is a basic workflow to help you get started with Actions	
+
+name: FreeBSD CI
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    # run a FreeBSD VM within VirtualBox on MacOS
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test in FreeBSD
+      uses: vmactions/freebsd-vm@v0.1.2
+      with:
+        prepare: pkg install -y tcl86
+      run: |
+        autoreconf -vi
+        ./configure --with-tcl=/usr/local/lib/tcl8.6 --mandir=/usr/local/man
+        make
+        sudo make install
+        make test
