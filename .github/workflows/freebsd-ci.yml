@@ -21,7 +21,7 @@ jobs:
     - name: Test in FreeBSD
       uses: vmactions/freebsd-vm@v0.1.2
       with:
-        prepare: pkg install -y tcl86 autoconf automake
+        prepare: pkg install -y tcl86 autoconf automake sudo
         run: |
           autoreconf -vi
           ./configure --with-tcl=/usr/local/lib/tcl8.6 --mandir=/usr/local/man
