@@ -1,5 +1,6 @@
 ![Linux CI](https://github.com/flightaware/tclbsd/workflows/Linux%20CI/badge.svg)
 ![Mac CI](https://github.com/flightaware/tclbsd/workflows/Mac%20CI/badge.svg)
+![FreeBSD CI](https://github.com/flightaware/tclbsd/workflows/FreeBSD%20CI/badge.svg)
 
 # tclbsd, a package for interfacing to various BSD UNIX system calls and library routines (and works pretty well with Linux, too)
 
