@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/flightaware/tclbsd.svg?branch=master)](https://travis-ci.org/flightaware/tclbsd)
+![Linux CI](https://github.com/flightaware/tclbsd/workflows/Linux%20CI/badge.svg)
+![Mac CI](https://github.com/flightaware/tclbsd/workflows/Mac%20CI/badge.svg)
 
 # tclbsd, a package for interfacing to various BSD UNIX system calls and library routines (and works pretty well with Linux, too)
 
