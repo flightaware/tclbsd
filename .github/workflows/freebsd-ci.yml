@@ -22,9 +22,9 @@ jobs:
       uses: vmactions/freebsd-vm@v0.1.2
       with:
         prepare: pkg install -y tcl86
-      run: |
-        autoreconf -vi
-        ./configure --with-tcl=/usr/local/lib/tcl8.6 --mandir=/usr/local/man
-        make
-        sudo make install
-        make test
+        run: |
+          autoreconf -vi
+          ./configure --with-tcl=/usr/local/lib/tcl8.6 --mandir=/usr/local/man
+          make
+          sudo make install
+          make test
