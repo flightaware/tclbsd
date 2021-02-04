@@ -19,7 +19,9 @@
 
 #include <sys/param.h>
 #include <sys/resource.h>
+#ifdef CPUSTATES
 #include <sys/sysctl.h>
+#endif
 #include <errno.h>
 #include <assert.h>
 
