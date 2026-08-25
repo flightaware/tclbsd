@@ -155,7 +155,7 @@ BSD_SyslogObjCmd (clientData, interp, objc, objv)
         char      *ident;
 	int        logopt = 0;
 	int        logoptIndex;
-	int        logoptObjc;
+	Tcl_Size   logoptObjc;
 	int        i;
 	Tcl_Obj  **logoptObjv;
 
