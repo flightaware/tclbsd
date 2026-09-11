@@ -20,6 +20,7 @@
 #include <string.h>
 
 #define SYSLOG_NAMES
+#define __USE_MISC
 #include <sys/syslog.h>
 
 #define TCLBSD_LOG_ERROR 1
