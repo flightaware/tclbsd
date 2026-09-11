@@ -15,10 +15,12 @@
  */
 
 #include <tcl.h>
+#include "bsd.h"
 
 #include <string.h>
 
 #define SYSLOG_NAMES
+#define __USE_MISC
 #include <sys/syslog.h>
 
 #define TCLBSD_LOG_ERROR 1
@@ -155,7 +157,7 @@ BSD_SyslogObjCmd (clientData, interp, objc, objv)
         char      *ident;
 	int        logopt = 0;
 	int        logoptIndex;
-	int        logoptObjc;
+	Tcl_Size   logoptObjc;
 	int        i;
 	Tcl_Obj  **logoptObjv;
 
