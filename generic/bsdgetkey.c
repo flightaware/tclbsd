@@ -45,6 +45,7 @@
 #endif /* USE_TERMIOS */
 
 #include <tcl.h>
+#include "bsd.h"
 
 
 /*

@@ -15,6 +15,7 @@
  */
 
 #include <tcl.h>
+#include "bsd.h"
 
 #include <string.h>
 
