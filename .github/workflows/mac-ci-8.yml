@@ -1,4 +1,4 @@
-name: Mac test build
+name: Mac TCL8 test build
 
 on:
   push:
