@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew install tcl-tk || true
+        brew install tcl-tk autoconf
     - name: configure
       run: |
         autoreconf -vi
