@@ -22,7 +22,7 @@ jobs:
       run: |
         autoreconf -vi
         PREFIX=/opt/homebrew
-        ./configure --with-tcl=$PREFIX/tcl-tk/lib --prefix=$PREFIX
+        ./configure --with-tcl=$PREFIX/lib --prefix=$PREFIX
     - name: make
       run: make
     - name: install
