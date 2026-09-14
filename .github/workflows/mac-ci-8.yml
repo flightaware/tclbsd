@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew install tcl-tk autoconf
+        brew install tcl-tk@8 autoconf
         find /opt -name tclConfig.sh
     - name: configure
       run: |
