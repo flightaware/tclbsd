@@ -63,11 +63,10 @@
  *----------------------------------------------------------------------
  */
 int
-BSD_GetKeyObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_GetKeyObjCmd (ClientData clientData,
+                  Tcl_Interp *interp,
+                  int objc,
+                  Tcl_Obj      *const objv[])
 {
     double ftimeout;
     struct termio orig_term_settings;

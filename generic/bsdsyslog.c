@@ -107,11 +107,10 @@ GetSyslogPriority (Tcl_Interp *interp, char *priorityName, int flags)
  *-----------------------------------------------------------------------------
  */
 int
-BSD_SyslogObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_SyslogObjCmd (ClientData clientData,
+                  Tcl_Interp *interp,
+                  int objc,
+                  Tcl_Obj      *const objv[])
 {
     int optIndex;
 
