@@ -17,6 +17,7 @@ jobs:
       run: |
         brew update
         brew install tcl-tk autoconf
+        find /opt -name tclConfig.sh
     - name: configure
       run: |
         autoreconf -vi
