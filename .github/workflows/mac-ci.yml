@@ -17,15 +17,11 @@ jobs:
       run: |
         brew update
         brew install tcl-tk || true
-        sudo mkdir -p /usr/local /usr/local/include /usr/local/lib /usr/local/bin
-        sudo ln -sf /usr/local/opt/tcl-tk/include /usr/local/include/tcl8.6
-        sudo cp /usr/local/opt/tcl-tk/lib/libtcl* /usr/local/lib
-        sudo ln -sf /usr/local/opt/tcl-tk/bin/tclsh8.6 /usr/local/bin/tclsh
-        sudo ln -sf /usr/local/opt/tcl-tk/bin/tclsh8.6 /usr/local/bin/tclsh8.6
     - name: configure
       run: |
         autoreconf -vi
-        ./configure --with-tcl=/usr/local/opt/tcl-tk/lib --prefix=/usr/local        
+        PREFIX=/opt/homebrew
+        ./configure --with-tcl=$PREFIX/tcl-tk/lib --prefix=$PREFIX
     - name: make
       run: make
     - name: install
