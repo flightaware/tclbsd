@@ -14,11 +14,12 @@
  *
  */
 
+#define SYSLOG_NAMES
 #include <tcl.h>
+#include "bsd.h"
 
 #include <string.h>
 
-#define SYSLOG_NAMES
 #include <sys/syslog.h>
 
 #define TCLBSD_LOG_ERROR 1
@@ -106,11 +107,10 @@ GetSyslogPriority (Tcl_Interp *interp, char *priorityName, int flags)
  *-----------------------------------------------------------------------------
  */
 int
-BSD_SyslogObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_SyslogObjCmd (ClientData clientData,
+                  Tcl_Interp *interp,
+                  int objc,
+                  Tcl_Obj      *const objv[])
 {
     int optIndex;
 
@@ -155,7 +155,7 @@ BSD_SyslogObjCmd (clientData, interp, objc, objv)
         char      *ident;
 	int        logopt = 0;
 	int        logoptIndex;
-	int        logoptObjc;
+	Tcl_Size   logoptObjc;
 	int        i;
 	Tcl_Obj  **logoptObjv;
 
