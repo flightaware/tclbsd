@@ -18,8 +18,6 @@ jobs:
         brew update
         brew reinstall tcl-tk@8
         brew install autoconf
-        find /opt -name tclConfig.sh
-        find /opt -name tcl-tk
     - name: configure
       run: |
         autoreconf -vi
