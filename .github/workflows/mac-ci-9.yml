@@ -16,12 +16,13 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew reinstall tcl-tk@8
+        brew uninstall tcl-tk@8
+        brew install tcl-tk@9
         brew install autoconf
     - name: configure
       run: |
         autoreconf -vi
-        PREFIX=/opt/homebrew/opt/tcl-tk@8
+        PREFIX=/opt/homebrew/opt/tcl-tk@9
         ./configure --with-tcl=$PREFIX/lib --prefix=$PREFIX
     - name: make
       run: make
