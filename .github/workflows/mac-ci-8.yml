@@ -16,8 +16,16 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew install tcl-tk@8 autoconf
+        brew reinstall tcl-tk@8
+        brew install autoconf
         find /opt -name tclConfig.sh
+        find /opt -name tcl-tk
+        TCL=`echo /opt/homebrew/Cellar/tcl-tk@8/*`
+        sudo mkdir -p /usr/local
+        sudo ln -sf $TCL/include /usr/local/include/tcl8.6
+        sudo cp $TCL/tcl-tk/lib/libtcl* /usr/local/lib
+        sudo ln -sf $TCL/tcl-tk/bin/tclsh8.6 /usr/local/bin/tclsh
+        sudo ln -sf $TCL/tcl-tk/bin/tclsh8.6 /usr/local/bin/tclsh8.6
     - name: configure
       run: |
         autoreconf -vi
