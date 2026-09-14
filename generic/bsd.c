@@ -384,7 +384,7 @@ BSD_RlimitObjCmd (ClientData clientData,
 		    break;
 
 		case SHBothIdx:
-		    panic ("unexpected/impossible code path");
+		    Tcl_Panic ("unexpected/impossible code path");
 	    }
 
 	    if (limitVal == RLIM_INFINITY) {
@@ -434,7 +434,7 @@ BSD_RlimitObjCmd (ClientData clientData,
 		    break;
 
 		case SHBothIdx:
-		    panic ("unexpected/impossible code path");
+		    Tcl_Panic ("unexpected/impossible code path");
 	    }
 
 	    if (setrlimit (resource, &rlimit) < 0) {
