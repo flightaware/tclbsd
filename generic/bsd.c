@@ -20,11 +20,10 @@
 #endif
 
 static int
-AppendNameLong (interp, listObj, name, element)
-    Tcl_Interp    *interp;
-    Tcl_Obj       *listObj;
-    char          *name;
-    long           element;
+AppendNameLong (Tcl_Interp *interp,
+                Tcl_Obj *listObj,
+                char *name,
+                long element)
 {
     Tcl_Obj   *stringObj;
     Tcl_Obj   *elementObj;
@@ -42,11 +41,10 @@ AppendNameLong (interp, listObj, name, element)
 }
 
 static int
-AppendNameDouble (interp, listObj, name, element)
-    Tcl_Interp    *interp;
-    Tcl_Obj       *listObj;
-    char          *name;
-    double         element;
+AppendNameDouble (Tcl_Interp *interp,
+                  Tcl_Obj *listObj,
+                  char *name,
+                  double element)
 {
     Tcl_Obj   *stringObj;
     Tcl_Obj   *elementObj;
@@ -65,11 +63,10 @@ AppendNameDouble (interp, listObj, name, element)
 }
 
 static int
-AppendNameString (interp, listObj, name, element)
-    Tcl_Interp    *interp;
-    Tcl_Obj       *listObj;
-    char          *name;
-    char          *element;
+AppendNameString (Tcl_Interp *interp,
+                  Tcl_Obj *listObj,
+                  char *name,
+                  char *element)
 {
     Tcl_Obj   *stringObj;
     Tcl_Obj   *elementObj;
@@ -87,11 +84,10 @@ AppendNameString (interp, listObj, name, element)
 }
 
 static int
-AppendNameObj (interp, listObj, name, appendListObj)
-    Tcl_Interp    *interp;
-    Tcl_Obj       *listObj;
-    char          *name;
-    Tcl_Obj       *appendListObj;
+AppendNameObj (Tcl_Interp *interp,
+               Tcl_Obj *listObj,
+               char *name,
+               Tcl_Obj *appendListObj)
 {
     Tcl_Obj   *stringObj;
 
@@ -121,11 +117,10 @@ AppendNameObj (interp, listObj, name, appendListObj)
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_RusageObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_RusageObjCmd (ClientData clientData,
+                  Tcl_Interp *interp,
+                  int objc,
+                  Tcl_Obj      *const objv[])
 {
     char         *subOption = NULL;
     Tcl_Obj      *resultObj = Tcl_GetObjResult (interp);
@@ -230,11 +225,10 @@ BSD_RusageObjCmd (clientData, interp, objc, objv)
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_RlimitObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_RlimitObjCmd (ClientData clientData,
+                  Tcl_Interp *interp,
+                  int objc,
+                  Tcl_Obj      *const objv[])
 {
     static const char *getSetOptions[] = { "get", "set", (char *) NULL};
     Tcl_WideInt limitVal = 0;
@@ -390,7 +384,7 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 		    break;
 
 		case SHBothIdx:
-		    panic ("unexpected/impossible code path");
+		    Tcl_Panic ("unexpected/impossible code path");
 	    }
 
 	    if (limitVal == RLIM_INFINITY) {
@@ -440,7 +434,7 @@ BSD_RlimitObjCmd (clientData, interp, objc, objv)
 		    break;
 
 		case SHBothIdx:
-		    panic ("unexpected/impossible code path");
+		    Tcl_Panic ("unexpected/impossible code path");
 	    }
 
 	    if (setrlimit (resource, &rlimit) < 0) {
@@ -648,11 +642,10 @@ StatfsBufToList (Tcl_Interp *interp, Tcl_Obj *listObj, struct statfs *sp)
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_StatfsObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_StatfsObjCmd (ClientData clientData,
+                  Tcl_Interp *interp,
+                  int objc,
+                  Tcl_Obj      *const objv[])
 {
     char         *path;
     Tcl_Obj      *resultObj = Tcl_GetObjResult (interp);
@@ -687,11 +680,10 @@ BSD_StatfsObjCmd (clientData, interp, objc, objv)
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_GetfsstatObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_GetfsstatObjCmd (ClientData clientData,
+                     Tcl_Interp *interp,
+                     int objc,
+                     Tcl_Obj      *const objv[])
 {
 #ifdef HAVE_GETFSSTAT
     Tcl_Obj       *resultObj = Tcl_GetObjResult (interp);
@@ -772,11 +764,10 @@ BSD_GetfsstatObjCmd (clientData, interp, objc, objv)
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_GetLoadAvgObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_GetLoadAvgObjCmd (ClientData clientData,
+                      Tcl_Interp *interp,
+                      int objc,
+                      Tcl_Obj      *const objv[])
 {
 #define LOADAVG_NELEM 3
 
@@ -818,11 +809,10 @@ BSD_GetLoadAvgObjCmd (clientData, interp, objc, objv)
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_SetProcTitleObjCmd (ClientData clientData,
+                        Tcl_Interp *interp,
+                        int objc,
+                        Tcl_Obj      *const objv[])
 {
 #ifdef HAVE_SETPROCTITLE
     char *titleString;
@@ -859,11 +849,10 @@ BSD_SetProcTitleObjCmd (clientData, interp, objc, objv)
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_AbortCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_AbortCmd (ClientData clientData,
+              Tcl_Interp *interp,
+              int objc,
+              Tcl_Obj      *const objv[])
 {
 
     abort();
@@ -885,11 +874,10 @@ BSD_AbortCmd (clientData, interp, objc, objv)
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_UptimeObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_UptimeObjCmd (ClientData clientData,
+                  Tcl_Interp *interp,
+                  int objc,
+                  Tcl_Obj      *const objv[])
 {
 #ifdef HAVE_CLOCK_GETTIME
     // struct timeval t;
@@ -1003,11 +991,10 @@ BSD_PanicProc(
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_SetPanicProcObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_SetPanicProcObjCmd (ClientData clientData,
+                        Tcl_Interp *interp,
+                        int objc,
+                        Tcl_Obj      *const objv[])
 {
     Tcl_SetPanicProc (BSD_PanicProc);
     return TCL_OK;
@@ -1027,11 +1014,10 @@ BSD_SetPanicProcObjCmd (clientData, interp, objc, objv)
  *-----------------------------------------------------------------------------
  */     
 int
-BSD_PanicObjCmd (clientData, interp, objc, objv)
-    ClientData    clientData;
-    Tcl_Interp   *interp;
-    int           objc;
-    Tcl_Obj      *const objv[];
+BSD_PanicObjCmd (ClientData clientData,
+                 Tcl_Interp *interp,
+                 int objc,
+                 Tcl_Obj      *const objv[])
 {
     if (objc != 2) {
 	Tcl_WrongNumArgs (interp, 0, objv, "message");
